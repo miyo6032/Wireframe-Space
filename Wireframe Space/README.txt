@@ -1,3 +1,6 @@
+This is a work-in-progress game by Michael Yoshimura
+It is an abstract space shooter, in which you can build your ship piece by piece!
+
 Controls:
 
 'a' and 'd' to rotate your ship, and 'w' to move forward. 'space' to boost if you have a boost module.
