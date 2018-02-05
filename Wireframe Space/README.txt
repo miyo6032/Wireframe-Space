@@ -1,5 +1,5 @@
 This is a work-in-progress game by Michael Yoshimura
-It is an abstract space shooter, in which you can build your ship piece by piece!
+It is an abstract space shooter, in which you can build and destroy ships piece by piece!
 
 Controls:
 
