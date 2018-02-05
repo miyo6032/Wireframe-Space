@@ -91,7 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 5
   originShip: {fileID: 0}
-  ExplosionRadius: 2
+  ExplosionRadius: 1.75
 --- !u!212 &212841773259058076
 SpriteRenderer:
   m_ObjectHideFlags: 1
