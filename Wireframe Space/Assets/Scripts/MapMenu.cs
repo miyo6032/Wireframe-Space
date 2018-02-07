@@ -53,7 +53,6 @@ public class MapMenu : MonoBehaviour {
         zoomOutScale = 1 / zoomInScale;
 
         gameObject.SetActive(false);
-
     }
 
     public void OpenMapMenu()//When the map is opened, sets up all of the features, and aligns content position
@@ -71,12 +70,12 @@ public class MapMenu : MonoBehaviour {
             if (!GameManager.instance.currentLoadedMap.arenaComplete)
                 MainMenu.instance.shipPoints += GameManager.instance.currentLoadedMap.reward;
 
-            /*int level = 1;
+            int level = 1;
             while(MainMenu.instance.shipPoints > levelCutoffs[level - 1])
             {
                 level++;
             }
-            MainMenu.instance.level = level;*/
+            MainMenu.instance.level = level;
 
             mapGenerator.CompleteNode(GameManager.instance.currentLoadedMap);
             MainMenu.instance.shipPoints += GameManager.instance.currentLoadedMap.reward;
@@ -86,7 +85,7 @@ public class MapMenu : MonoBehaviour {
             GameManager.instance.missionCompleted = false;
         }
 
-        shipPoints.text = "Ship Points: " + MainMenu.instance.shipPoints;
+        shipPoints.text = "Ship Points: " + MainMenu.instance.shipPoints + "\nLevel: " + MainMenu.instance.level;
 
         if (currentShipIndex != -1)
         {
@@ -118,6 +117,7 @@ public class MapMenu : MonoBehaviour {
         gameObject.SetActive(false);
         Editor.instance.gameObject.SetActive(true);
         Editor.instance.editingCurrentShip = false;
+        Editor.instance.bank.LoadBanks();
     }
 
     public void ExitToMainMenu()

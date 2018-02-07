@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//Handles the scrolling of the module bank
+//Handles the scrolling of the module bank and initializes the bank
 public class ScrollModuleBank : MonoBehaviour {
 
     float unitSize;
@@ -11,29 +11,46 @@ public class ScrollModuleBank : MonoBehaviour {
 
     public GridLayoutGroup scrollingPanel;
 
+    public Transform mask;
+
     public Scrollbar scrollbar;
 
-    public List<GameObject> bankPrefabs;
+    public List<ModuleBank> bankPrefabs;
 
-	void Start () {
-        foreach(GameObject bank in bankPrefabs)
+    GridLayoutGroup panel;
+
+	public void LoadBanks () {
+        panel = Instantiate(scrollingPanel);
+        panel.transform.SetParent(mask);
+        panel.transform.localPosition = Vector3.zero;
+        panel.transform.localScale = new Vector3(1, 1, 1);
+        foreach (ModuleBank bank in bankPrefabs)
         {
-            GameObject instance = Instantiate(bank);
-            instance.transform.SetParent(scrollingPanel.transform);
-            instance.transform.localScale = new Vector3(1, 1, 1);
+            if (bank.modulePrefab.requiredLevel <= MainMenu.instance.level)
+            {
+                GameObject instance = Instantiate(bank).gameObject;
+                instance.transform.SetParent(panel.transform);
+                instance.transform.localScale = new Vector3(1, 1, 1);
+            }
         }
 
-        unitSize = (int)scrollingPanel.cellSize.x + (int)scrollingPanel.spacing.x;
+        unitSize = (int)panel.cellSize.x + (int)panel.spacing.x;
         panelSize = (int)Mathf.Clamp((Mathf.Ceil(bankPrefabs.Count * 0.5f) - 5) * unitSize, 0, float.PositiveInfinity);
         scrollbar.size = Mathf.Clamp(5 / (float)Mathf.Ceil(bankPrefabs.Count * 0.5f), 0.1f, 1);
         scrollbar.value = 0;
     }
 
+    public void ClearBanks()
+    {
+        Destroy(panel.gameObject);
+        panel = null;
+    }
+
     public void Scroll()
     {
-        Vector3 pos = scrollingPanel.transform.position;
+        Vector3 pos = panel.transform.position;
         pos.y = scrollbar.value * panelSize * MainMenu.instance.globalScale.localScale.x + transform.position.y;
-        scrollingPanel.transform.position = pos;
+        panel.transform.position = pos;
     }
 
 }

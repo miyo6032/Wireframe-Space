@@ -61,6 +61,8 @@ public class Editor : MonoBehaviour {
 
     public Transform centerOfMassDot;
 
+    public ScrollModuleBank bank;
+
     public int loadedShipIndex = -1;
 
     int shipPoints = 0;
@@ -391,6 +393,7 @@ public class Editor : MonoBehaviour {
 
     public void Exit()//Exit to map menu
     {
+        bank.ClearBanks();
         ClearEditor();
         MapMenu.instance.gameObject.SetActive(true);
         MapMenu.instance.OpenMapMenu();

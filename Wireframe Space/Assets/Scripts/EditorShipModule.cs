@@ -14,6 +14,7 @@ IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler, IPointerE
     public Slot currentSlot = null;
     public ShipModule representativeModule;
     public bool editable = true;
+    public int requiredLevel = 1;
 
     public GameObject dragInstance;
 
