@@ -37,6 +37,10 @@ public class MapMenu : MonoBehaviour {
 
     GameObject collectorObj;
 
+    public GameObject levelUpPanel;
+
+    public Text levelUpText;
+
     int[] levelCutoffs = { 25, 32, 45, 64, 90, 130, 180, 250, 320, 400 };
 
     void Start()
@@ -70,12 +74,18 @@ public class MapMenu : MonoBehaviour {
             if (!GameManager.instance.currentLoadedMap.arenaComplete)
                 MainMenu.instance.shipPoints += GameManager.instance.currentLoadedMap.reward;
 
+            //Level up stuff
             int level = 1;
             while(MainMenu.instance.shipPoints > levelCutoffs[level - 1])
             {
                 level++;
             }
-            MainMenu.instance.level = level;
+            if (MainMenu.instance.level < level)
+            {
+                levelUpPanel.SetActive(true);
+                levelUpText.text = "You are now level " + level + ". Check the ship editor to see what you've unlocked!";
+                MainMenu.instance.level = level;
+            }
 
             mapGenerator.CompleteNode(GameManager.instance.currentLoadedMap);
             MainMenu.instance.shipPoints += GameManager.instance.currentLoadedMap.reward;

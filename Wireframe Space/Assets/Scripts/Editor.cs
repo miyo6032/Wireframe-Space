@@ -35,11 +35,7 @@ public class Editor : MonoBehaviour {
 
     public GameObject darkenScreen;
 
-    public Image missingImage;
-    
-    public Text missingText;
-
-    public Text infoText;
+    public LevelUpText infoText;
 
     public InputField shipName;
 
@@ -90,6 +86,11 @@ public class Editor : MonoBehaviour {
         GenerateShiftButtons();
 
         gameObject.SetActive(false);
+    }
+
+    public void ShowLevelUpText(int level)
+    {
+
     }
 
     void GenerateShiftButtons()
@@ -338,10 +339,7 @@ public class Editor : MonoBehaviour {
         else//Activate info panel
         {
             darkenScreen.SetActive(true);
-            infoPanel.SetActive(true);
-            missingImage.gameObject.SetActive(false);
-            missingText.text = "";
-            infoText.text = "You must enter a name for your ship! Press okay to continue.";
+            infoText.ActivateDialogue("You must enter a name for your ship! Press okay to continue.", "", "", -1);
         }
     }
 
@@ -542,11 +540,7 @@ public class Editor : MonoBehaviour {
                     if(cockpit != null)
                     {
                         darkenScreen.SetActive(true);
-                        infoPanel.SetActive(true);
-                        missingImage.gameObject.SetActive(true);
-                        missingImage.sprite = database.Cockpit.GetComponent<Image>().sprite;
-                        missingText.text = "Cockpit Module";
-                        infoText.text = "Your ship has multiple cockpits! There can only be one per ship.";
+                        infoText.ActivateDialogue("Your ship has multiple cockpits! There can only be one per ship.", "Cockpit Module", "Hexagon", -1);
                         return false;
                     }
                     cockpit = vertex;
@@ -557,11 +551,7 @@ public class Editor : MonoBehaviour {
         if(cockpit == null)
         {
             darkenScreen.SetActive(true);
-            infoPanel.SetActive(true);
-            missingImage.gameObject.SetActive(true);
-            missingImage.sprite = database.Cockpit.GetComponent<Image>().sprite;
-            missingText.text = "Cockpit Module";
-            infoText.text = "Your ship must have a cockpit! Make sure it is well protected in your ship.";
+            infoText.ActivateDialogue("Your ship must have a cockpit! Make sure it is well protected in your ship.", "Cockpit Module", "Hexagon", -1);
             return false;
         }
 
@@ -601,10 +591,7 @@ public class Editor : MonoBehaviour {
         if (missingValue)
         {
             darkenScreen.SetActive(true);
-            infoPanel.SetActive(true);
-            missingImage.gameObject.SetActive(false);
-            missingText.text = "";
-            infoText.text = "Some parts are not attached to your ship! Unattached modules will be marked in red.";
+            infoText.ActivateDialogue("Some parts are not attached to your ship! Unattached modules will be marked in red.", "", "", -1);
             return false;
         }
 
