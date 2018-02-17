@@ -211,7 +211,7 @@ public class MapGenerator : MonoBehaviour {
             }
         }
 
-        return new Map(enemyShips, difficultyAddition, arenaSize, (int)newPos.x, (int)newPos.y, rewardAddition, false);
+        return new Map(new List<ShipSave>(), difficultyAddition, arenaSize, (int)newPos.x, (int)newPos.y, rewardAddition, false);
     }
 
     List<ShipSave> GetPossibleShips(float shipPoints)//Gets possible ships with the specified shipPoints and firepower

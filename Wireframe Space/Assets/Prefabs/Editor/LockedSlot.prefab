@@ -9,67 +9,45 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1254931194482422}
+  m_RootGameObject: {fileID: 1028028684392416}
   m_IsPrefabParent: 1
---- !u!1 &1254931194482422
+--- !u!1 &1028028684392416
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 224271793189406878}
-  - component: {fileID: 222649414812488158}
-  - component: {fileID: 114772561339638560}
-  - component: {fileID: 114557595541261562}
-  - component: {fileID: 225566456896026880}
+  - component: {fileID: 224680401148236984}
+  - component: {fileID: 222479353309383782}
+  - component: {fileID: 114363749218267142}
   m_Layer: 5
-  m_Name: ArmoredBeam0D
+  m_Name: LockedSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &114557595541261562
+--- !u!114 &114363749218267142
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1254931194482422}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a2b8f4f7d689654f9fe50b56bca7f18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  title: Beam
-  cost: 6
-  desc: Connects and protects your ship
-  currentSlot: {fileID: 0}
-  representativeModule: {fileID: 114656685236831818, guid: 9507ff824360f6d4295f747f905907b9,
-    type: 2}
-  editable: 1
-  requiredLevel: 5
-  dragInstance: {fileID: 0}
---- !u!114 &114772561339638560
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1254931194482422}
+  m_GameObject: {fileID: 1028028684392416}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5724139, g: 0, b: 1, a: 1}
+  m_Color: {r: 0.41911763, g: 0.41911763, b: 0.41911763, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 12633823c0d40d541a8c7e36869ce982, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0d419a0a1f871554aa73b06537b7e75d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -77,18 +55,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!222 &222649414812488158
+--- !u!222 &222479353309383782
 CanvasRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1254931194482422}
---- !u!224 &224271793189406878
+  m_GameObject: {fileID: 1028028684392416}
+--- !u!224 &224680401148236984
 RectTransform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1254931194482422}
+  m_GameObject: {fileID: 1028028684392416}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -98,17 +76,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -336.89313, y: -204.20236}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!225 &225566456896026880
-CanvasGroup:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1254931194482422}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0

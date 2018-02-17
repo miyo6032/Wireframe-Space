@@ -16,7 +16,7 @@ public class LevelUpText : MonoBehaviour {
 
     private Info currentDialogue;
 
-    public void Start()
+    public void Awake()
     {
         dialogueData = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/Dialogue.json"));
         ConstructDatabase();
@@ -76,7 +76,7 @@ public class LevelUpText : MonoBehaviour {
         }
         else
         {
-            Editor.instance.DisableInfoPanel();
+            gameObject.SetActive(false);
         }
     }
 }

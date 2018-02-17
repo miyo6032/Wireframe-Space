@@ -24,6 +24,7 @@ public class ScrollModuleBank : MonoBehaviour {
         panel.transform.SetParent(mask);
         panel.transform.localPosition = Vector3.zero;
         panel.transform.localScale = new Vector3(1, 1, 1);
+        int moduleCount = 0;
         foreach (ModuleBank bank in bankPrefabs)
         {
             if (bank.modulePrefab.requiredLevel <= MainMenu.instance.level)
@@ -31,12 +32,13 @@ public class ScrollModuleBank : MonoBehaviour {
                 GameObject instance = Instantiate(bank).gameObject;
                 instance.transform.SetParent(panel.transform);
                 instance.transform.localScale = new Vector3(1, 1, 1);
+                moduleCount++;
             }
         }
 
         unitSize = (int)panel.cellSize.x + (int)panel.spacing.x;
-        panelSize = (int)Mathf.Clamp((Mathf.Ceil(bankPrefabs.Count * 0.5f) - 5) * unitSize, 0, float.PositiveInfinity);
-        scrollbar.size = Mathf.Clamp(5 / (float)Mathf.Ceil(bankPrefabs.Count * 0.5f), 0.1f, 1);
+        panelSize = (int)Mathf.Clamp((Mathf.Ceil(moduleCount * 0.5f) - 5) * unitSize, 0, float.PositiveInfinity);
+        scrollbar.size = Mathf.Clamp(5 / (float)Mathf.Ceil(moduleCount * 0.5f), 0.1f, 1);
         scrollbar.value = 0;
     }
 

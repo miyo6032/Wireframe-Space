@@ -41,7 +41,9 @@ public class MapMenu : MonoBehaviour {
 
     public Text levelUpText;
 
-    int[] levelCutoffs = { 25, 32, 45, 64, 90, 130, 180, 250, 320, 400 };
+    int[] levelCutoffs = { 25, 32, 45, 64, 90, 130, 180, 250, 320, 400};
+
+    bool leveledup = false;
 
     void Start()
     {
@@ -69,6 +71,7 @@ public class MapMenu : MonoBehaviour {
         {
             content.anchoredPosition = GameManager.instance.contentPosition;
         }
+
         if (GameManager.instance.profile != -1 && GameManager.instance.missionCompleted)
         {
             if (!GameManager.instance.currentLoadedMap.arenaComplete)
@@ -76,19 +79,20 @@ public class MapMenu : MonoBehaviour {
 
             //Level up stuff
             int level = 1;
-            while(MainMenu.instance.shipPoints > levelCutoffs[level - 1])
+            while(MainMenu.instance.shipPoints >= levelCutoffs[level - 1])
             {
                 level++;
             }
+
             if (MainMenu.instance.level < level)
             {
                 levelUpPanel.SetActive(true);
                 levelUpText.text = "You are now level " + level + ". Check the ship editor to see what you've unlocked!";
                 MainMenu.instance.level = level;
+                leveledup = true;
             }
 
             mapGenerator.CompleteNode(GameManager.instance.currentLoadedMap);
-            MainMenu.instance.shipPoints += GameManager.instance.currentLoadedMap.reward;
             MainMenu.instance.SaveProfile();
             mapGenerator.SaveMap();
 
@@ -101,6 +105,16 @@ public class MapMenu : MonoBehaviour {
         {
             SetCurrentShip(currentShipIndex, currentShipPreset);
         }
+    }
+
+    public bool GetLeveledUP()
+    {
+        return leveledup;
+    }
+
+    public void SetLeveledUp(bool b)
+    {
+        leveledup = b;
     }
 
     public void ZoomOut()
@@ -121,13 +135,11 @@ public class MapMenu : MonoBehaviour {
         }
     }
 
-    public void OpenEditor()//Opens the editor gui
+    public void OpenEditor(bool editing)//Opens the editor gui called by buttons that open the editor gui
     {
         mapGenerator.ClearMap();
         gameObject.SetActive(false);
-        Editor.instance.gameObject.SetActive(true);
-        Editor.instance.editingCurrentShip = false;
-        Editor.instance.bank.LoadBanks();
+        Editor.instance.OpenEditor(editing);
     }
 
     public void ExitToMainMenu()

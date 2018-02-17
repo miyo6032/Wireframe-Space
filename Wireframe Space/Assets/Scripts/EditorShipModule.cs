@@ -138,5 +138,9 @@ IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler, IPointerE
             Editor.instance.DisplayStats();
             Destroy(gameObject);
         }
+        if (Input.GetMouseButton(2))
+        {
+
+        }
     }
 }

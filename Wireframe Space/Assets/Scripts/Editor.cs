@@ -23,19 +23,21 @@ public class Editor : MonoBehaviour {
 
     public Slot slotPrefab;
 
+    public GameObject slotPanelPrefab;
+
+    public Transform editorPanel;
+
+    public GameObject lockedSlot;
+
     public ShiftButton shiftbutton;
 
     public GameObject slotPanel;
 
     public GameObject shiftPanel;
 
-    public GameObject infoPanel;
-
     public GameObject saveAsPanel;
 
-    public GameObject darkenScreen;
-
-    public LevelUpText infoText;
+    public LevelUpText infoPanel;
 
     public InputField shipName;
 
@@ -67,6 +69,8 @@ public class Editor : MonoBehaviour {
 
     int boost = 0;
 
+    int[] editorSizeLevels = { 1, 3, 5, 8, 10};
+
     BinaryFormatter bf = new BinaryFormatter();
 
     //List of all adjacent slot positions
@@ -82,15 +86,55 @@ public class Editor : MonoBehaviour {
             Destroy(gameObject);
         }
 
-        GenerateGrid();
         GenerateShiftButtons();
 
+        infoPanel.gameObject.SetActive(false);
+        saveAsPanel.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
 
-    public void ShowLevelUpText(int level)
+    public void OpenEditor(bool editing)
     {
+        gameObject.SetActive(true);
+        bank.LoadBanks();
+        GenerateEditorSpace();
+        if (editing && MapMenu.instance.currentShipIndex != -1)
+        {
+            LoadShip(MapMenu.instance.currentShipIndex, MapMenu.instance.currentShipPreset);
+            editingCurrentShip = true;
+        }
+        if (MapMenu.instance.GetLeveledUP())
+        {
+            infoPanel.ActivateDialogue(MainMenu.instance.level);
+            MapMenu.instance.SetLeveledUp(false);
+        }
+    }
 
+    public void TryToExit()//Will exit unless there are unsaved changes on an already loaded ship
+    {
+        if (loadedShipIndex != -1 && !ShipsEquivalent(GetCurrentEditorShip(), GetSavedShips()[loadedShipIndex]))
+        {
+            saveOrExitPanel.SetActive(true);
+            return;
+        }
+        Exit();
+    }
+
+    public void Exit()//Exit to map menu
+    {
+        bank.ClearBanks();
+        ClearEditor();
+        slots.Clear();
+        Destroy(slotPanel.gameObject);
+        MapMenu.instance.gameObject.SetActive(true);
+        MapMenu.instance.OpenMapMenu();
+        gameObject.SetActive(false);
+    }
+
+    public void EnableShipList()
+    {
+        savedShipList.gameObject.SetActive(true);
+        savedShipList.LoadList(false);
     }
 
     void GenerateShiftButtons()
@@ -105,11 +149,51 @@ public class Editor : MonoBehaviour {
         }
     }
 
-    void GenerateGrid()//Generates a hexagonal grid of slots to build your custom ship in
+    void GenerateEditorSpace()
     {
-        /*int radius = Mathf.Clamp(MainMenu.instance.level, 2, 6);
-        float extraScale = radius > 4 ? 0.7f : 1;*/
-        int radius = 4;
+
+        slotPanel = Instantiate(slotPanelPrefab, editorPanel.transform, false);
+
+        GenerateLockedHexes();
+        int radius= 0;
+        while(editorSizeLevels[radius] <= MainMenu.instance.level || radius == editorSizeLevels.Length)
+        {
+            radius++;
+        }
+        GenerateHexGrid(radius);
+    }
+
+    void GenerateLockedHexes()
+    {
+        int radius = 7;
+        for (int x = -radius; x < 0; x++)
+        {
+            for (int y = -radius - x; y <= radius; y++)
+            {
+                GameObject instance = Instantiate(lockedSlot);
+                instance.transform.SetParent(slotPanel.transform);
+                instance.transform.localScale = new Vector3(1, 1, 1);
+                SetHexPositon(new Vector2(x, y), slotPanel.transform.position, instance.gameObject, unitSize * transform.localScale.x);
+            }
+        }
+        for (int x = 0; x <= radius; x++)
+        {
+            for (int y = radius - x; y >= -radius; y--)
+            {
+                GameObject instance = Instantiate(lockedSlot);
+                instance.transform.SetParent(slotPanel.transform);
+                instance.transform.localScale = new Vector3(1, 1, 1);
+                SetHexPositon(new Vector2(x, y), slotPanel.transform.position, instance.gameObject, unitSize * transform.localScale.x);
+            }
+        }
+    }
+
+    void GenerateHexGrid(int radius)//Generates a hexagonal grid of slots to build your custom ship in
+    {
+        while(MainMenu.instance.level >= editorSizeLevels[radius - 1])
+        {
+            radius++;
+        }
         for(int x = -radius; x < 0; x++)
         {
             for (int y = -radius - x; y <= radius; y++) {
@@ -286,7 +370,6 @@ public class Editor : MonoBehaviour {
 
             if (saveAs)//the player will have to save the ship as a new object
             {
-                darkenScreen.SetActive(true);
                 saveAsPanel.SetActive(true);
             }
             else//Else overwrite the loaded ship
@@ -334,12 +417,11 @@ public class Editor : MonoBehaviour {
             file.Close();
 
             saveAsPanel.SetActive(false);
-            darkenScreen.SetActive(false);
         }
         else//Activate info panel
         {
-            darkenScreen.SetActive(true);
-            infoText.ActivateDialogue("You must enter a name for your ship! Press okay to continue.", "", "", -1);
+            infoPanel.gameObject.SetActive(true);
+            infoPanel.ActivateDialogue("You must enter a name for your ship! Press okay to continue.", "", "", -1);
         }
     }
 
@@ -365,61 +447,9 @@ public class Editor : MonoBehaviour {
         return false;
     }
 
-    public void EditCurrentShip()//Called by map menu by the edit current ship button
-    {
-        if (MapMenu.instance.currentShipIndex != -1)
-        {
-            LoadShip(MapMenu.instance.currentShipIndex, MapMenu.instance.currentShipPreset);
-            editingCurrentShip = true;
-        }
-    }
-
     public void SetAsCurrentShip()
     {
         MapMenu.instance.SetCurrentShip(loadedShipIndex, false);
-    }
-
-    public void TryToExit()//Will exit unless there are unsaved changes on an already loaded ship
-    {
-        if (loadedShipIndex != -1 && !ShipsEquivalent(GetCurrentEditorShip(), GetSavedShips()[loadedShipIndex]))
-        {
-            saveOrExitPanel.SetActive(true);
-            return;
-        }
-        Exit();
-    }
-
-    public void Exit()//Exit to map menu
-    {
-        bank.ClearBanks();
-        ClearEditor();
-        MapMenu.instance.gameObject.SetActive(true);
-        MapMenu.instance.OpenMapMenu();
-        gameObject.SetActive(false);
-    }
-
-    public void DisableInfoPanel()
-    {
-        infoPanel.SetActive(false);
-        if (!saveAsPanel.activeSelf)
-        {
-            darkenScreen.SetActive(false);
-        }
-    }
-
-    public void DisableSaveAsPanel()
-    {
-        saveAsPanel.SetActive(false);
-        if (!infoPanel.activeSelf)
-        {
-            darkenScreen.SetActive(false);
-        }
-    }
-
-    public void EnableShipList()
-    {
-        savedShipList.gameObject.SetActive(true);
-        savedShipList.LoadList(false);
     }
 
     public void ChangeRotation()
@@ -522,7 +552,7 @@ public class Editor : MonoBehaviour {
             infoPanel.SetActive(true);
             missingImage.gameObject.SetActive(false);
             missingText.text = "";
-            infoText.text = "You have exceeded the maximum ship point count by " + (shipPoints - MainMenu.instance.shipPoints) + ". Remove some extra parts!";
+            infoPanel.text = "You have exceeded the maximum ship point count by " + (shipPoints - MainMenu.instance.shipPoints) + ". Remove some extra parts!";
             return false;
         }*/
 
@@ -539,8 +569,8 @@ public class Editor : MonoBehaviour {
                 {
                     if(cockpit != null)
                     {
-                        darkenScreen.SetActive(true);
-                        infoText.ActivateDialogue("Your ship has multiple cockpits! There can only be one per ship.", "Cockpit Module", "Hexagon", -1);
+                        infoPanel.gameObject.SetActive(true);
+                        infoPanel.ActivateDialogue("Your ship has multiple cockpits! There can only be one per ship.", "Cockpit Module", "Hexagon", -1);
                         return false;
                     }
                     cockpit = vertex;
@@ -550,8 +580,8 @@ public class Editor : MonoBehaviour {
 
         if(cockpit == null)
         {
-            darkenScreen.SetActive(true);
-            infoText.ActivateDialogue("Your ship must have a cockpit! Make sure it is well protected in your ship.", "Cockpit Module", "Hexagon", -1);
+            infoPanel.gameObject.SetActive(true);
+            infoPanel.ActivateDialogue("Your ship must have a cockpit! Make sure it is well protected in your ship.", "Cockpit Module", "Hexagon", -1);
             return false;
         }
 
@@ -590,8 +620,8 @@ public class Editor : MonoBehaviour {
 
         if (missingValue)
         {
-            darkenScreen.SetActive(true);
-            infoText.ActivateDialogue("Some parts are not attached to your ship! Unattached modules will be marked in red.", "", "", -1);
+            infoPanel.gameObject.SetActive(true);
+            infoPanel.ActivateDialogue("Some parts are not attached to your ship! Unattached modules will be marked in red.", "", "", -1);
             return false;
         }
 

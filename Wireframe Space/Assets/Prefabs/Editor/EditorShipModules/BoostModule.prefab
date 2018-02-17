@@ -48,6 +48,7 @@ MonoBehaviour:
   representativeModule: {fileID: 114098810609648114, guid: 759166fc07539f541a1e5f787191ce28,
     type: 2}
   editable: 1
+  requiredLevel: 2
   dragInstance: {fileID: 0}
 --- !u!114 &114557781397733494
 MonoBehaviour:

@@ -185,7 +185,7 @@ public class MainMenu : MonoBehaviour {
     {
         ProfileSave newProfile = new ProfileSave();
         profile = index;
-        shipPoints = 1000;
+        shipPoints = 20;
         level = 1;
 
         SaveProfile();
