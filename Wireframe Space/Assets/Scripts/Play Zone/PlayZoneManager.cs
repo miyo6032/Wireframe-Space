@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -9,6 +7,7 @@ public class PlayZoneManager : MonoBehaviour {
 
     public static PlayZoneManager instance = null;
 
+    //Building blocks to be instantiated
     public ShipModule module;
     public ShipModule playerGun;
     public ShipModule enemyGun;
@@ -71,14 +70,6 @@ public class PlayZoneManager : MonoBehaviour {
             instance.GetComponent<EnemyMovement>().rotationOffset = enemy.direction;
         }
 
-    }
-
-    void addHex(Ship ship, int x, int y)
-    {
-        for(int i = 0; i < hexagonalPositions.Length; i++)
-        {
-            ship.AddModule((int)hexagonalPositions[i].x + x, (int)hexagonalPositions[i].y + y, module);
-        }
     }
 
     public void MissionCompleted()

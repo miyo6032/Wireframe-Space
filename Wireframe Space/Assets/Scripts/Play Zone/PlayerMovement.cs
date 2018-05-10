@@ -9,11 +9,16 @@ public class PlayerMovement : MonoBehaviour {
 
     public float movementFactor;
 
+    //Inverse mass for efficiency
     public float invMass;
 
+    //Inverse boost for efficiency
     public float invBoost;
 
+    //Represents the amount of boost "nitro"
     public int currentBoost;
+
+    public float maxBoostVel = 2.5f;
 
     float boostFactor = 1;
 
@@ -23,7 +28,6 @@ public class PlayerMovement : MonoBehaviour {
 
     public Slider boostSlider;
 
-    // Use this for initialization
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -40,12 +44,14 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 
-        float horizonal = Input.GetAxis("Horizontal");//Movement for the player
+        //The inputs for the player
+        float horizonal = Input.GetAxis("Horizontal");
         float vertical = Mathf.Clamp(Input.GetAxis("Vertical"), 0, 1);
 
         float offsetedDirection = rb.rotation + GameManager.instance.player.direction;
 
-        Vector2 rotation = new Vector2(Mathf.Cos(offsetedDirection * Mathf.Deg2Rad), Mathf.Sin(offsetedDirection * Mathf.Deg2Rad));//Gets a vector 2 from rotation
+        //Gets a vector 2 from rotation
+        Vector2 rotation = new Vector2(Mathf.Cos(offsetedDirection * Mathf.Deg2Rad), Mathf.Sin(offsetedDirection * Mathf.Deg2Rad));
 
         if (vertical > 0)
         rb.velocity = (rotation * playerShip.moveSpeed * vertical * movementFactor * boostFactor) * invMass;
@@ -57,35 +63,42 @@ public class PlayerMovement : MonoBehaviour {
 
         bool usedBoost = false;
 
+        //Boost input
         if (Input.GetButton("Secondary"))
         {
+            //Increase the boost smoothly
             if (currentBoost > 0)
             {
-                boostFactor = Mathf.Clamp(boostFactor + 0.1f, 1, 2.5f);
+                boostFactor = Mathf.Clamp(boostFactor + 0.1f, 1, maxBoostVel);
             }
             usedBoost = true;
         }
 
+        //Reduce the boost smoothly
         if (currentBoost <= 0 || !usedBoost)
         {
-            boostFactor = Mathf.Clamp(boostFactor - 0.1f, 1, 2.5f);
+            boostFactor = Mathf.Clamp(boostFactor - 0.1f, 1, maxBoostVel);
         }
 
+        //Recharge the boost meter
         if (currentBoost < playerShip.maxBoost && !usedBoost)
         {
             currentBoost++;
         }
         
+        //Deplete the boost meter if in use
         if (usedBoost && currentBoost > 0)
         {
             currentBoost -= 4;
         }
 
+        //Keep boost meter from overfilling?!
         if(currentBoost > playerShip.maxBoost)
         {
             currentBoost = playerShip.maxBoost;
         }
 
+        //The visual boostmeter
         boostSlider.value = currentBoost * invBoost;
 
     }

@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+//The missle bullet type - handles area damage explosions
 public class Missile : Bullet {
 
     public float ExplosionRadius;
@@ -16,6 +15,8 @@ public class Missile : Bullet {
         col = GetComponent<Collider2D>();
     }
 
+    //Calculates the area damage in the area
+    //the function get called once, and then again to destroy it
     public override void Destroy(ShipModule mod)
     {
 
@@ -29,6 +30,7 @@ public class Missile : Bullet {
 
         exploded = true;
 
+        //Finds all ship modules in a certain radius
         Collider2D[] collisions = Physics2D.OverlapCircleAll(transform.position, ExplosionRadius);
 
         foreach(Collider2D collision in collisions)

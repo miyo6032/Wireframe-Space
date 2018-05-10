@@ -1,22 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+//The enemy gun object - does the shooting and aiming as well
 public class EnemyGun : MonoBehaviour
 {
-
     public float fireCooldown = 1.0f;
 
     public float range = 20f;
 
     public float aimTime = 90f;
 
-    public float staggerLag;
-
     private bool canFire = true;//Used with fireCooldown to create a timed fireing mechanism
 
     public GameObject bullet;
 
+    //To make the bullets not fire all at once on a ship with multiple guns
+    [HideInInspector]
+    public float staggerLag;
+
+    [HideInInspector]
     public Ship target;
 
     void Start()
@@ -43,6 +44,7 @@ public class EnemyGun : MonoBehaviour
         }
     }
 
+    //Fire the bullet - get overriden by trishot and other more advanced guns
     protected virtual void Fire()
     {
         GameObject instance = Instantiate(bullet, transform.position, transform.rotation);

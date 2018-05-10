@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.EventSystems;
 
+//The camera movement
 public class CameraMovement : MonoBehaviour
 {
 

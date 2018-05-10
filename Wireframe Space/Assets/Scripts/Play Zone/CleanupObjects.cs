@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 //Used to clean up bullets in the play zone
 public class CleanupObjects : MonoBehaviour {

@@ -4083,7 +4083,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1975566856}
   m_HandleRect: {fileID: 1975566855}
   m_Direction: 2
-  m_Value: 0.50399995
+  m_Value: 0.504
   m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -6385,9 +6385,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Set as Current Ship
-
-'
+  m_Text: Set as Current Ship
 --- !u!222 &1011624438
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6667,7 +6665,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1688814050}
   m_HandleRect: {fileID: 1688814049}
   m_Direction: 0
-  m_Value: 0.5
+  m_Value: 0.49999997
   m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -9623,9 +9621,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Edit Current Ship
-
-'
+  m_Text: Edit Current Ship
 --- !u!222 &1499889177
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12758,7 +12754,6 @@ MonoBehaviour:
   contentPosition: {x: 0, y: 0}
   profile: -1
   missionCompleted: 0
-  staggerGuns: 0
 --- !u!4 &2023651960
 Transform:
   m_ObjectHideFlags: 0

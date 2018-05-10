@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿//Don't even really know if this is necessary
 public class MovementModule : ShipModule {
 
     public float movement = 1;

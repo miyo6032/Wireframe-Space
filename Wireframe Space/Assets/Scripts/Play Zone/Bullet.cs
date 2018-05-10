@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+//The bullet object
 public class Bullet : MonoBehaviour {
 
     private Rigidbody2D rb;

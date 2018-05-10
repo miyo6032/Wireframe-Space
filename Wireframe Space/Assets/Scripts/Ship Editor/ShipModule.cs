@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class ShipModule : MonoBehaviour {
 
@@ -39,6 +36,19 @@ public class ShipModule : MonoBehaviour {
         }
     }
 
+
+    public void OnCollisionEnter2D(Collision2D collision)//Handles collision with other modules
+    {
+        if (collision.otherCollider.GetComponent<ShipModule>())
+        {
+            if (health > 0)
+            {
+                health--;
+            }
+        }
+        UpdateDamage();
+    }
+
     public void OnTriggerEnter2D(Collider2D other)//Handles bullet collisions
     {
         if (health > 0)
@@ -63,6 +73,11 @@ public class ShipModule : MonoBehaviour {
                 }
             }
         }
+        UpdateDamage();
+    }
+
+    void UpdateDamage()
+    {
         if (invincible) return;
         if (health <= 0)
         {
@@ -74,18 +89,17 @@ public class ShipModule : MonoBehaviour {
         }
 
         //Apply broken graphics
-        if(health == 1)
+        if (health == 1)
         {
             hexImage.sprite = brokenImage2;
         }
-        else if(maxHealth > 2)
+        else if (maxHealth > 2)
         {
-            if(health <= 3)
+            if (health <= 3)
             {
                 hexImage.sprite = brokenImage;
             }
         }
-
     }
 
 

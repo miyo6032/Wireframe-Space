@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+//The enemy ai
 public class EnemyMovement : MonoBehaviour
 {
-
     public float rotationFactor = 1f;
 
     public float followRange = 60;
@@ -27,13 +25,17 @@ public class EnemyMovement : MonoBehaviour
     {
         if (PlayZoneManager.instance.player && Vector2.Distance(enemyShip.transform.position, PlayZoneManager.instance.player.transform.position) < followRange)
         {
-            Vector3 direction = PlayZoneManager.instance.player.transform.position - transform.position;//Get direction need to face
+            //Get direction need to face
+            Vector3 desiredDirection = PlayZoneManager.instance.player.transform.position - transform.position;
 
-            Vector2 currentFacingRotation = new Vector2(Mathf.Cos((rb.rotation + rotationOffset) * Mathf.Deg2Rad), Mathf.Sin((rb.rotation + rotationOffset) * Mathf.Deg2Rad));//Set current facing direction
+            //Get current facing direction
+            Vector2 currentFacingRotation = new Vector2(Mathf.Cos((rb.rotation + rotationOffset) * Mathf.Deg2Rad), Mathf.Sin((rb.rotation + rotationOffset) * Mathf.Deg2Rad));
 
-            float signedRotation = Vector2.SignedAngle(currentFacingRotation, direction);
+            //The angle between the direction and the desired direction
+            float signedRotation = Vector2.SignedAngle(currentFacingRotation, desiredDirection);
 
-            float rotationMagnitude = Mathf.Clamp(Mathf.Abs(signedRotation) * Mathf.Deg2Rad, 0, 1);//A damening effect to make it look like the enemy is more reactionary! SWEET
+            //A dampening effect to make it look like the enemy is more reactionary! SWEET
+            float rotationMagnitude = Mathf.Clamp(Mathf.Abs(signedRotation) * Mathf.Deg2Rad, 0, 1);
 
             rb.AddTorque((Mathf.Sign(signedRotation) * rotationFactor * enemyShip.rotationTorque * rotationMagnitude));
 

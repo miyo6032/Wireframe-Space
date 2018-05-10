@@ -1,14 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+//The player's gun
 public class Gun: MonoBehaviour {
 
+    //Used to quantify the gun's relative power
     public int relativeFirepower;
 
     public float fireCooldown = 1.0f;
 
-    private bool canFire = true;//Used with fireCooldown to create a timed fireing mechanism
+    //Used with fireCooldown to create a timed fireing mechanism
+    private bool canFire = true;
 
     public float staggerLag = 0;
 
@@ -16,8 +17,8 @@ public class Gun: MonoBehaviour {
 
     void Update()
     {
-
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);//Converts the mouse position in the screen to world space.
+        //Converts the mouse position in the screen to world space.
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         float angle = Vector2.SignedAngle(Vector2.right, mousePosition - transform.position);
 
@@ -27,10 +28,12 @@ public class Gun: MonoBehaviour {
         {
             Invoke("Fire", staggerLag);
             canFire = false;
-            Invoke("ResetCooldown", fireCooldown);//Will allow the player to fire after this is called in fireCooldown seconds.
+            //Will allow the player to fire after this is called in fireCooldown seconds.
+            Invoke("ResetCooldown", fireCooldown);
         }
     }
 
+    //The fire function - overriden if different bullet emmisions are desired
     protected virtual void Fire()
     {
         if (Input.GetButton("Fire1"))
