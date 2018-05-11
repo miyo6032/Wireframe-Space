@@ -2,7 +2,6 @@
 using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-using System;
 using UnityEngine.UI;
 
 //Handles the vast majority of the ship editor gui, saving, loading, updating and checking. 
@@ -28,11 +27,9 @@ public class Editor : MonoBehaviour {
 
     public GameObject lockedSlot;
 
-    public ShiftButton shiftbutton;
-
     public GameObject slotPanel;
 
-    public GameObject shiftPanel;
+    public ShiftPanel shiftPanel;
 
     public GameObject saveAsPanel;
 
@@ -85,7 +82,7 @@ public class Editor : MonoBehaviour {
             Destroy(gameObject);
         }
 
-        GenerateShiftButtons();
+        shiftPanel.GenerateShiftButtons();
 
         infoPanel.gameObject.SetActive(false);
         saveAsPanel.gameObject.SetActive(false);
@@ -134,18 +131,6 @@ public class Editor : MonoBehaviour {
     {
         savedShipList.gameObject.SetActive(true);
         savedShipList.LoadList(false);
-    }
-
-    void GenerateShiftButtons()
-    {
-        for(int i = 1; i < slotPositions.Length; i++)
-        {
-            ShiftButton instance = Instantiate(shiftbutton).GetComponent<ShiftButton>();
-            instance.xyPos = slotPositions[i];
-            instance.transform.SetParent(shiftPanel.transform);
-            instance.transform.localScale = new Vector3(1, 1, 1);
-            SetHexPositon(instance.xyPos, instance.transform.parent.transform.position, instance.gameObject, unitSize * transform.localScale.x);
-        }
     }
 
     void GenerateEditorSpace()
@@ -545,15 +530,12 @@ public class Editor : MonoBehaviour {
     bool IsShipValid(Dictionary<Vector2, ModuleVertex> modules)//Checks to see that there is 1 cockpit, and also that there are no island nodes from the cockpit.
     {
 
-        /*if(shipPoints > MainMenu.instance.shipPoints)
+        if(shipPoints > MainMenu.instance.shipPoints)
         {
-            darkenScreen.SetActive(true);
-            infoPanel.SetActive(true);
-            missingImage.gameObject.SetActive(false);
-            missingText.text = "";
-            infoPanel.text = "You have exceeded the maximum ship point count by " + (shipPoints - MainMenu.instance.shipPoints) + ". Remove some extra parts!";
+            infoPanel.gameObject.SetActive(true);
+            infoPanel.ActivateDialogue("You have exceeded the maximum ship point count by " + (shipPoints - MainMenu.instance.shipPoints) + ". Remove some extra parts!", "", "", -1);
             return false;
-        }*/
+        }
 
         ModuleVertex cockpit = null;
 
@@ -763,43 +745,6 @@ public class Editor : MonoBehaviour {
             visited = v;
         }
 
-    }
-
-}
-
-[Serializable]
-public class ShipSave
-{
-    public string title;
-    public int shipPoints;
-    public int firePower;
-    public int boost;
-    public float direction;
-    public List<ModuleSaveData> modules = new List<ModuleSaveData>();
-
-    public ShipSave(List<ModuleSaveData> m, string t, int s, int f, float d, int b)
-    {
-        modules = m;
-        title = t;
-        shipPoints = s;
-        firePower = f;
-        direction = d;
-        boost = b;
-    }
-
-}
-
-[Serializable]
-public class ModuleSaveData
-{
-    public int Id;
-    public int xPos;
-    public int yPos;
-
-    public ModuleSaveData(int id, Vector2 xy) {
-        Id = id;
-        xPos = (int)xy.x;
-        yPos = (int)xy.y;
     }
 
 }

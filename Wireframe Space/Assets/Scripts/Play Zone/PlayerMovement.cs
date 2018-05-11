@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour {
         Vector2 rotation = new Vector2(Mathf.Cos(offsetedDirection * Mathf.Deg2Rad), Mathf.Sin(offsetedDirection * Mathf.Deg2Rad));
 
         if (vertical > 0)
-        rb.velocity = (rotation * playerShip.moveSpeed * vertical * movementFactor * boostFactor) * invMass;
+        rb.AddForce((rotation * playerShip.moveSpeed * vertical * movementFactor * boostFactor), ForceMode2D.Impulse);
 
         if(horizonal != 0)
         rb.angularVelocity = (-horizonal * playerShip.rotationTorque * rotationFactor) * invMass;

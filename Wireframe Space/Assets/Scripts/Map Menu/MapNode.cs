@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 //An individual part of the space map: represents a playable level in the map
@@ -13,7 +11,7 @@ public class MapNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        MapMenu.instance.LoadTooltip("Sector", "Difficulty: " + map.difficulty + "\nArena Size:" + map.arenaSize + "\nReward:" + map.reward, this);
+        MapMenu.instance.LoadTooltip("Sector", "Ship Difficulty: " + map.shipSize + "\nShip Count:" + map.shipsToSpawn.Count + "\nReward:" + map.reward, this);
         mouseOverNode = true;
     }
 

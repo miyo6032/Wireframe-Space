@@ -4084,7 +4084,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1975566855}
   m_Direction: 2
   m_Value: 0.504
-  m_Size: 0
+  m_Size: 0.28825623
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6665,8 +6665,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1688814050}
   m_HandleRect: {fileID: 1688814049}
   m_Direction: 0
-  m_Value: 0.49999997
-  m_Size: 0
+  m_Value: 0.50000006
+  m_Size: 0.36876658
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9347,6 +9347,7 @@ GameObject:
   - component: {fileID: 1491289671}
   - component: {fileID: 1491289673}
   - component: {fileID: 1491289672}
+  - component: {fileID: 1491289674}
   m_Layer: 5
   m_Name: ShiftPanel
   m_TagString: Untagged
@@ -9406,6 +9407,19 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1491289670}
+--- !u!114 &1491289674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1491289670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66b1c38fa8f9d5e46b0615c8bb422867, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shiftbutton: {fileID: 114072633341532684, guid: d09dd0e2385722441834f5c2a9bf4158,
+    type: 2}
 --- !u!1 &1495714277
 GameObject:
   m_ObjectHideFlags: 0
@@ -12026,10 +12040,8 @@ MonoBehaviour:
     type: 2}
   editorPanel: {fileID: 834489082}
   lockedSlot: {fileID: 1028028684392416, guid: f52afb17b24b0c74493655e892402c9e, type: 2}
-  shiftbutton: {fileID: 114072633341532684, guid: d09dd0e2385722441834f5c2a9bf4158,
-    type: 2}
-  slotPanel: {fileID: 0}
-  shiftPanel: {fileID: 1491289670}
+  slotPanel: {fileID: 1300456489229528, guid: c9aec888a35685f40a8b87f8c744b797, type: 2}
+  shiftPanel: {fileID: 1491289674}
   saveAsPanel: {fileID: 1341555310}
   infoPanel: {fileID: 388739111}
   shipName: {fileID: 1841322491}

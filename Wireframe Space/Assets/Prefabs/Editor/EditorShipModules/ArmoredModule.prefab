@@ -75,7 +75,7 @@ MonoBehaviour:
   representativeModule: {fileID: 114317193979766068, guid: 5368e47b8d6028c48add80a6754d6a00,
     type: 2}
   editable: 1
-  requiredLevel: 5
+  requiredLevel: 6
   dragInstance: {fileID: 0}
 --- !u!222 &222428197713806588
 CanvasRenderer:

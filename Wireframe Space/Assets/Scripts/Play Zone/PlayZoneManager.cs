@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 //Handles most of the play zone: spawn ships, and handles winning and losing
 public class PlayZoneManager : MonoBehaviour {
@@ -50,19 +51,22 @@ public class PlayZoneManager : MonoBehaviour {
             player.AddModule(mod.xPos, mod.yPos, GameManager.instance.database.GetPrefabByIdPlayZone(mod.Id, "PlayerModule"));
         }
 
-        int distanceX = GameManager.instance.currentLoadedMap.arenaSize + 10;
+        float angle = 0;
+        List<ShipSave> ships = GameManager.instance.currentLoadedMap.shipsToSpawn;
 
-        foreach (ShipSave enemy in GameManager.instance.currentLoadedMap.shipsToSpawn)//Add all of the ships
+        //Add all of the enemy ships
+        foreach (ShipSave enemy in ships)
         {
             Ship instance = Instantiate(enemyPrefab);
+            //Load the modules
             foreach(ModuleSaveData mod in enemy.modules)
             {
                 instance.AddModule(mod.xPos, mod.yPos, GameManager.instance.database.GetPrefabByIdPlayZone(mod.Id, "EnemyModule"));
             }
 
-            instance.transform.position = new Vector3(distanceX, Random.Range(-50, 50), 0);
-            
-            distanceX -= (int)(enemy.shipPoints / (float)GameManager.instance.currentLoadedMap.difficulty);
+            instance.transform.position = Random.Range(25, 60) * new Vector3(Mathf.Cos(angle), Mathf.Sin(angle));
+
+            angle += 360 * Mathf.Deg2Rad / ships.Count;
 
             radar.AddToRadar(instance.gameObject);
             instance.transform.eulerAngles = new Vector3(0, 0, enemy.direction);

@@ -1,0 +1,27 @@
+[
+	
+	{
+		"sprite": "Hexagon",
+		"text": "You've unlocked the boost module!",
+		"missingtext" : "Boost Module",
+		"id": 2,
+		"next": -1
+	},
+
+	{
+		"sprite": "Hexagon",
+		"text": "You've unlocked the Trishot gun!",
+		"missingtext" : "Trishot",
+		"id": 3,
+		"next": -1
+	},
+
+	{
+		"sprite": "Hexagon",
+		"text": "Your ship has multiple cockpits! There can only be one per ship.",
+		"missingtext" : "Cockpit Module",
+		"id": 4,
+		"next": -1
+	}
+
+]

@@ -1943,7 +1943,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
+  m_LinearDrag: 8
   m_AngularDrag: 1
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -1963,10 +1963,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationFactor: 100
-  movementFactor: 5
+  movementFactor: 1
   invMass: 0
   invBoost: 0
   currentBoost: 0
+  maxBoostVel: 2.5
   boostSlider: {fileID: 1989678492}
 --- !u!114 &1405640753
 MonoBehaviour:

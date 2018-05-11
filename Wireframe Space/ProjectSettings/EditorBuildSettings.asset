@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/EmptyScene.unity
     guid: b24416bce3ffd5d498245a28896ba0b3
   - enabled: 0
-    path: Assets/Scenes/MainMenu.unity
-    guid: 626790d39b81a354e81b9110b959b06d
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/ShipEditor.unity
     guid: 59e26a65daf2f84449f8a74f7ed15647

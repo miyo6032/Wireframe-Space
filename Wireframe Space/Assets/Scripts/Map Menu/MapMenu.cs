@@ -101,9 +101,14 @@ public class MapMenu : MonoBehaviour {
 
         shipPoints.text = "Ship Points: " + MainMenu.instance.shipPoints + "\nLevel: " + MainMenu.instance.level;
 
+        //Set current ship
         if (currentShipIndex != -1)
         {
             SetCurrentShip(currentShipIndex, currentShipPreset);
+        }
+        else
+        {
+            SetCurrentShip(0, true);
         }
     }
 
