@@ -68,14 +68,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2b8f4f7d689654f9fe50b56bca7f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: Beam
-  cost: 6
-  desc: Connects and protects your ship
   currentSlot: {fileID: 0}
-  representativeModule: {fileID: 114308627886469110, guid: 8ecb8b0317caf684abe4e82c300338f9,
-    type: 2}
+  id: 2
   editable: 1
-  requiredLevel: 6
   dragInstance: {fileID: 0}
 --- !u!222 &222989343714058118
 CanvasRenderer:

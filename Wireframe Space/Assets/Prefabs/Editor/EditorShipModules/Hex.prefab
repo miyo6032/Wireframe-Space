@@ -41,12 +41,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2b8f4f7d689654f9fe50b56bca7f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: Ship Body
-  cost: 2
-  desc: The standard building block of your ship
   currentSlot: {fileID: 0}
-  representativeModule: {fileID: 114791384863849520, guid: ef1f10c33597ba14698ebbf8a3b49ad5,
-    type: 2}
+  id: 14
   editable: 1
   dragInstance: {fileID: 0}
 --- !u!114 &114380241620894446

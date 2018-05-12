@@ -112,13 +112,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2b8f4f7d689654f9fe50b56bca7f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: Basic Gun
-  cost: 10
-  desc: Shoots bullets that deal one damage
   currentSlot: {fileID: 0}
-  representativeModule: {fileID: 114287595780407338, guid: 7911b2650affa044c99279225b837514,
-    type: 2}
+  id: 9
   editable: 1
+  dragInstance: {fileID: 0}
 --- !u!222 &222292061329195764
 CanvasRenderer:
   m_ObjectHideFlags: 1

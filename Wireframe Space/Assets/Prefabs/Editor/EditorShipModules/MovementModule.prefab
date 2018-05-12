@@ -68,13 +68,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2b8f4f7d689654f9fe50b56bca7f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: Thrust
-  cost: 8
-  desc: Add it increase your ship's movement speed
   currentSlot: {fileID: 0}
-  representativeModule: {fileID: 114996057478529316, guid: 0b531ce84b24a8e468c23aef5964a971,
-    type: 2}
+  id: 13
   editable: 1
+  dragInstance: {fileID: 0}
 --- !u!222 &222410421638938992
 CanvasRenderer:
   m_ObjectHideFlags: 1

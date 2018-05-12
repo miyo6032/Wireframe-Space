@@ -26,8 +26,8 @@ public class Gun: MonoBehaviour {
 
         if (Input.GetButton("Fire1") && canFire)
         {
-            Invoke("Fire", staggerLag);
             canFire = false;
+            Invoke("Fire", staggerLag);
             //Will allow the player to fire after this is called in fireCooldown seconds.
             Invoke("ResetCooldown", fireCooldown);
         }
@@ -36,13 +36,10 @@ public class Gun: MonoBehaviour {
     //The fire function - overriden if different bullet emmisions are desired
     protected virtual void Fire()
     {
-        if (Input.GetButton("Fire1"))
-        {
-            GameObject instance = Instantiate(bullet, transform.position, transform.rotation);
-            GameObject mothership = transform.parent.parent.gameObject;
-            instance.GetComponent<Bullet>().originShip = mothership;
-            instance.GetComponent<Rigidbody2D>().velocity = mothership.GetComponent<Rigidbody2D>().velocity;
-        }
+        GameObject instance = Instantiate(bullet, transform.position, transform.rotation);
+        GameObject mothership = transform.parent.parent.gameObject;
+        instance.GetComponent<Bullet>().originShip = mothership;
+        instance.GetComponent<Rigidbody2D>().velocity = mothership.GetComponent<Rigidbody2D>().velocity;
     }
 
     void ResetCooldown()

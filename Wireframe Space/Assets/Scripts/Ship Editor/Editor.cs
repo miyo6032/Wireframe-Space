@@ -39,8 +39,6 @@ public class Editor : MonoBehaviour {
 
     public SavedShipList savedShipList;
 
-    public ModuleDatabase database;
-
     public Text shipStats;
 
     public Text shipStats2;
@@ -58,6 +56,8 @@ public class Editor : MonoBehaviour {
     public ScrollModuleBank bank;
 
     public int loadedShipIndex = -1;
+
+    private ModuleDatabase database;
 
     int shipPoints = 0;
 
@@ -81,6 +81,8 @@ public class Editor : MonoBehaviour {
         {
             Destroy(gameObject);
         }
+
+        database = GameManager.instance.database;
 
         shiftPanel.GenerateShiftButtons();
 
@@ -280,8 +282,9 @@ public class Editor : MonoBehaviour {
         {
             if (v.Value.slot.HasItem())
             {
-                centerOfMass += new Vector2(v.Value.slot.transform.localPosition.x * v.Value.slot.childModule.representativeModule.mass, v.Value.slot.transform.localPosition.y * v.Value.slot.childModule.representativeModule.mass);
-                weight += v.Value.slot.childModule.representativeModule.mass;
+                Module stats = database.GetModuleStats(v.Value.slot.childModule.id);
+                centerOfMass += new Vector2(v.Value.slot.transform.localPosition.x * stats.mass, v.Value.slot.transform.localPosition.y * stats.mass);
+                weight += stats.mass;
             }
         }
         if (weight == 0)
@@ -378,7 +381,7 @@ public class Editor : MonoBehaviour {
         {
             if (kV.Value.slot.HasItem())
             {
-                ModuleSaveData save = new ModuleSaveData(kV.Value.slot.childModule.representativeModule.id, kV.Key);
+                ModuleSaveData save = new ModuleSaveData(kV.Value.slot.childModule.id, kV.Key);
                 shipToSave.modules.Add(save);
             }
         }
@@ -458,7 +461,7 @@ public class Editor : MonoBehaviour {
         shipDirection.transform.eulerAngles = new Vector3(0, 0, shipToLoad.direction);
         foreach (ModuleSaveData module in shipToLoad.modules)
         {
-            EditorShipModule instance = Instantiate(database.GetPrefabByID(module.Id));
+            EditorShipModule instance = Instantiate(database.GetEditorModule(module.Id));
             SlotVertex parentSlot;
             slots.TryGetValue(new Vector2(module.xPos, module.yPos), out parentSlot);
             instance.transform.position = parentSlot.slot.transform.position;
@@ -546,7 +549,7 @@ public class Editor : MonoBehaviour {
                 ModuleVertex vertex = new ModuleVertex(kV.Value.slot.childModule, new List<ModuleVertex>(), false);
                 modules.Add(kV.Key, vertex);
                 SearchAndConnect(kV.Key, modules);
-                if(vertex.module.representativeModule.id == database.Cockpit.representativeModule.id)
+                if(vertex.module.id == database.Cockpit.id)
                 {
                     if(cockpit != null)
                     {
@@ -622,13 +625,15 @@ public class Editor : MonoBehaviour {
             modules.TryGetValue(vec2, out v2);
             if (v2 == null) return 0;
 
-            for (int i = 0; i < v2.module.representativeModule.connectionPositions.Length; i++)
+            Module v2stats = database.GetModuleStats(v2.module.id);
+
+            for (int i = 0; i < v2stats.connectionPositions.Length; i++)
             {
-                if (v2.module.representativeModule.connectionPositions[i] == v2v1)
+                if (v2stats.connectionPositions[i] == v2v1)
                 {
                     break;
                 }
-                else if (i == v2.module.representativeModule.connectionPositions.Length - 1)
+                else if (i == v2stats.connectionPositions.Length - 1)
                 {
                     return 0;
                 }
@@ -647,13 +652,13 @@ public class Editor : MonoBehaviour {
     {
         ModuleVertex v;
         modules.TryGetValue(xyPos, out v);
-        EditorShipModule module = v.module;
+        Module module = database.GetModuleStats(v.module.id);
 
         if (module != null)
         {
-            for (int i = 0; i < module.representativeModule.connectionPositions.Length; i++)
+            for (int i = 0; i < module.connectionPositions.Length; i++)
             {
-                Vector2 offset = module.representativeModule.connectionPositions[i] + xyPos;
+                Vector2 offset = module.connectionPositions[i] + xyPos;
                 AddConnection(xyPos, offset, modules);
             }
         }
@@ -671,22 +676,22 @@ public class Editor : MonoBehaviour {
         {
             if (kv.Value.slot.HasItem())
             {
-                EditorShipModule module = kv.Value.slot.childModule;
-                if (module.tag == "Gun")
+                Module module = database.GetModuleStats(kv.Value.slot.childModule.id);
+                if (module.title == "Gun")
                 {
-                    firePower += module.representativeModule.GetComponentInChildren<Gun>().relativeFirepower;
+                    firePower += 1;
                 }
-                else if (module.representativeModule is MovementModule)
+                else if (module.title == "Thrust")
                 {
                     thrust += 1;
                 }
-                else if(module.representativeModule.tag == "BoostModule")
+                else if(module.title == "Nitro Thrust")
                 {
                     boost += 200;
                 }
-                totalHealth += module.representativeModule.health;
+                totalHealth += module.maxHealth;
                 shipPoints += module.cost;
-                mass += module.representativeModule.mass;
+                mass += module.mass;
             }
         }
 

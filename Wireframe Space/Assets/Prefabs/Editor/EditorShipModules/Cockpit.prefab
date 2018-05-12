@@ -41,13 +41,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2b8f4f7d689654f9fe50b56bca7f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: Cockpit
-  cost: 1
-  desc: A necessary part for any manned ship!
   currentSlot: {fileID: 0}
-  representativeModule: {fileID: 114080007036799336, guid: 4782a2b43b5646041b57a3adb2364af5,
-    type: 2}
+  id: 8
   editable: 1
+  dragInstance: {fileID: 0}
 --- !u!114 &114298214281561490
 MonoBehaviour:
   m_ObjectHideFlags: 1

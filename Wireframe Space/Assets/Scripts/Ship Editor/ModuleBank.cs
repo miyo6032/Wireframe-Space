@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 //Implements functionality of the parts bank in the ship editor
 public class ModuleBank : MonoBehaviour,
 IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public EditorShipModule modulePrefab;
+    public int id;
 
     public GameObject dragInstance;
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        dragInstance = Instantiate(modulePrefab.gameObject);
+        dragInstance = Instantiate(GameManager.instance.database.GetEditorModule(id).gameObject);
         dragInstance.transform.position = eventData.position;
         dragInstance.transform.SetParent(Editor.instance.transform);
         dragInstance.transform.localScale = new Vector3(1, 1, 1);
@@ -44,11 +41,12 @@ IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEnd
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        Module modulePrefab = GameManager.instance.database.GetModuleStats(id);
         Editor.instance.tooltipTitle.text = modulePrefab.title;
-        Editor.instance.tooltipBody.text = "Health: " + modulePrefab.representativeModule.health +
+        Editor.instance.tooltipBody.text = "Health: " + modulePrefab.maxHealth +
             "\nCost: " + modulePrefab.cost +
-            "\nMass: " + modulePrefab.representativeModule.mass + 
-            "\n" + modulePrefab.desc;
+            "\nMass: " + modulePrefab.mass + 
+            "\n" + modulePrefab.description;
     }
 
     public void OnPointerExit(PointerEventData eventData)

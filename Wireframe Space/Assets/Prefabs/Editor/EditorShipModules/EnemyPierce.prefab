@@ -112,13 +112,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2b8f4f7d689654f9fe50b56bca7f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: 
-  cost: 0
-  desc: 
   currentSlot: {fileID: 0}
-  representativeModule: {fileID: 114327854447960798, guid: d6cfa78786db46744bbb910b73f61db5,
-    type: 2}
+  id: 11
   editable: 1
+  dragInstance: {fileID: 0}
 --- !u!222 &222225281369659678
 CanvasRenderer:
   m_ObjectHideFlags: 1

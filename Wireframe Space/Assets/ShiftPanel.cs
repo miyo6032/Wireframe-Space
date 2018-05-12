@@ -11,10 +11,17 @@ public class ShiftPanel : MonoBehaviour {
         for (int i = 1; i < slotPositions.Length; i++)
         {
             ShiftButton instance = Instantiate(shiftbutton).GetComponent<ShiftButton>();
+
             instance.xyPos = slotPositions[i];
             instance.transform.SetParent(transform);
             instance.transform.localScale = new Vector3(1, 1, 1);
-            Editor.instance.SetHexPositon(instance.xyPos, instance.transform.parent.transform.position, instance.gameObject, Editor.instance.unitSize * transform.localScale.x);
+
+            Editor.instance.SetHexPositon(
+                instance.xyPos, 
+                instance.transform.parent.transform.position, 
+                instance.gameObject, 
+                Editor.instance.unitSize * Editor.instance.transform.localScale.x
+            );
         }
     }
 }

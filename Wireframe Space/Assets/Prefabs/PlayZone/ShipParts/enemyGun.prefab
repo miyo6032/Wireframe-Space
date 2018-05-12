@@ -129,20 +129,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexImage: {fileID: 212047442977142340}
-  brokenImage: {fileID: 21300000, guid: d4b1c4d4246ec3e45bdc2ec346e085f5, type: 3}
-  brokenImage2: {fileID: 21300000, guid: 92eb16b8e541a234b929ca5133b684d6, type: 3}
-  id: 6
-  mass: 4
+  id: 9
   invincible: 0
   health: 2
   xyPos: {x: 0, y: 0}
-  connectionPositions:
-  - {x: 0, y: 1}
-  - {x: 1, y: 0}
-  - {x: 1, y: -1}
-  - {x: 0, y: -1}
-  - {x: -1, y: 0}
-  - {x: -1, y: 1}
   ship: {fileID: 0}
 --- !u!114 &114814975979095986
 MonoBehaviour:
@@ -158,8 +148,8 @@ MonoBehaviour:
   fireCooldown: 1
   range: 20
   aimTime: 30
-  staggerLag: 0
   bullet: {fileID: 1262473006018090, guid: bdc159ee9e6de394caca1b6be90d7173, type: 2}
+  staggerLag: 0
   target: {fileID: 0}
 --- !u!212 &212047442977142340
 SpriteRenderer:

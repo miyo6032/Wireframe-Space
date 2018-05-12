@@ -41,14 +41,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2b8f4f7d689654f9fe50b56bca7f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: Boost
-  cost: 10
-  desc: Boosts your ship speed for a short time
   currentSlot: {fileID: 0}
-  representativeModule: {fileID: 114098810609648114, guid: 759166fc07539f541a1e5f787191ce28,
-    type: 2}
+  id: 7
   editable: 1
-  requiredLevel: 2
   dragInstance: {fileID: 0}
 --- !u!114 &114557781397733494
 MonoBehaviour:

@@ -85,14 +85,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2b8f4f7d689654f9fe50b56bca7f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: Trishot
-  cost: 18
-  desc: Shoots 3 bullets in a spread
   currentSlot: {fileID: 0}
-  representativeModule: {fileID: 114748604848931560, guid: fd46465c59561904ba62891d0d15663d,
-    type: 2}
+  id: 12
   editable: 1
-  requiredLevel: 3
   dragInstance: {fileID: 0}
 --- !u!114 &114617820995364604
 MonoBehaviour:

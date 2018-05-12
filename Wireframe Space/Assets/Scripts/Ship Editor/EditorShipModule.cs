@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -8,13 +6,9 @@ using UnityEngine.UI;
 public class EditorShipModule : MonoBehaviour, IBeginDragHandler,
 IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler
 {
-    public string title;
-    public int cost;
-    public string desc;
     public Slot currentSlot = null;
-    public ShipModule representativeModule;
+    public int id;
     public bool editable = true;
-    public int requiredLevel = 1;
 
     public GameObject dragInstance;
 
@@ -28,7 +22,7 @@ IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler, IPointerE
         }
         else if (eventData.button == PointerEventData.InputButton.Middle)
         {
-            dragInstance = Instantiate(GameManager.instance.database.GetPrefabByID(representativeModule.id).gameObject);
+            dragInstance = Instantiate(GameManager.instance.database.GetEditorModule(id).gameObject);
             dragInstance.transform.position = eventData.position;
             dragInstance.transform.SetParent(Editor.instance.transform);
             dragInstance.transform.localScale = new Vector3(1, 1, 1);

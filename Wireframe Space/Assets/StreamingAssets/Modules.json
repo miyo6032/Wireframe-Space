@@ -1,0 +1,228 @@
+[
+	
+	{
+		"mainSprite": "0D_Armored_Beam",
+		"brokenImage": "0D_Armored_Beam_Broken",
+		"brokenImage2" : "0D_Armored_Beam_Broken2",
+		"gun": "",
+		"id": 0,
+		"mass": 2,
+		"maxHealth": 6,
+		"connectionPositions": [[1, 0], [-1, 0]],
+		"title": "Armored Beam",
+		"cost": 6,
+		"description": "Connects and protects your ship",
+		"requiredLevel": 6 
+	},
+
+	{
+		"mainSprite": "0D_Beam",
+		"brokenImage": "0D_Beam_Broken",
+		"brokenImage2" : "0D_Beam_Broken2",
+		"gun": "",
+		"id": 1,
+		"mass": 1,
+		"maxHealth": 2,
+		"connectionPositions": [[1, 0], [-1, 0]],
+		"title": "Beam",
+		"cost": 1,
+		"description": "Connects your ship",
+		"requiredLevel": 1 
+	},
+
+	{
+		"mainSprite": "60D_Armored_Beam",
+		"brokenImage": "60D_Armored_Beam_Broken",
+		"brokenImage2" : "60D_Armored_Beam_Broken2",
+		"gun": "",
+		"id": 2,
+		"mass": 2,
+		"maxHealth": 6,
+		"connectionPositions": [[0, 1], [0, -1]],
+		"title": "Armored Beam",
+		"cost": 6,
+		"description": "Connects and protects your ship",
+		"requiredLevel": 6 
+	},
+
+	{
+		"mainSprite": "60D_Beam",
+		"brokenImage": "60D_Beam_Broken",
+		"brokenImage2" : "60D_Beam_Broken2",
+		"gun": "",
+		"id": 3,
+		"mass": 1,
+		"maxHealth": 2,
+		"connectionPositions": [[0, 1], [0, -1]],
+		"title": "Beam",
+		"cost": 1,
+		"description": "Connects your ship",
+		"requiredLevel": 1 
+	},
+
+	{
+		"mainSprite": "120D_Armored_Beam",
+		"brokenImage": "120D_Armored_Beam_Broken",
+		"brokenImage2" : "120D_Armored_Beam_Broken2",
+		"gun": "",
+		"id": 4,
+		"mass": 2,
+		"maxHealth": 6,
+		"connectionPositions": [[1, -1], [-1, 1]],
+		"title": "Armored Beam",
+		"cost": 6,
+		"description": "Connects and protects your ship",
+		"requiredLevel": 6 
+	},
+
+	{
+		"mainSprite": "120D_Beam",
+		"brokenImage": "120D_Beam_Broken",
+		"brokenImage2" : "120D_Beam_Broken2",
+		"gun": "",
+		"id": 5,
+		"mass": 1,
+		"maxHealth": 2,
+		"connectionPositions": [[1, -1], [-1, 1]],
+		"title": "Beam",
+		"cost": 1,
+		"description": "Connects your ship",
+		"requiredLevel": 1 
+	},
+
+	{
+		"mainSprite": "Armor",
+		"brokenImage": "Armor_Broken",
+		"brokenImage2" : "Armor_Broken2",
+		"gun": "",
+		"id": 6,
+		"mass": 3,
+		"maxHealth": 6,
+		"connectionPositions": [[0, 1], [1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1]],
+		"title": "Armored Body",
+		"cost": 8,
+		"description": "Heavy duty armor",
+		"requiredLevel": 6 
+	},
+
+	{
+		"mainSprite": "Boost",
+		"brokenImage": "Boost_Broken",
+		"brokenImage2" : "Boost_Broken2",
+		"gun": "",
+		"id": 7,
+		"mass": 2,
+		"maxHealth": 2,
+		"connectionPositions": [[0, 1], [1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1]],
+		"title": "Nitro Thrust",
+		"cost": 10,
+		"description": "Boosts speed for a short time",
+		"requiredLevel": 3 
+	},
+
+	{
+		"mainSprite": "Cockpit",
+		"brokenImage": "Cockpit_Broken",
+		"brokenImage2" : "Cockpit_Broken2",
+		"gun": "",
+		"id": 8,
+		"mass": 2,
+		"maxHealth": 2,
+		"connectionPositions": [[0, 1], [1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1]],
+		"title": "Cockpit",
+		"cost": 1,
+		"description": "Necessary to drive your ship",
+		"requiredLevel": 1 
+	},
+
+	{
+		"mainSprite": "Body",
+		"brokenImage": "Body_Broken",
+		"brokenImage2" : "Body_Broken2",
+		"gun": "Basic_Gun",
+		"id": 9,
+		"mass": 4,
+		"maxHealth": 2,
+		"connectionPositions": [[0, 1], [1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1]],
+		"title": "Basic Gun",
+		"cost": 10,
+		"description": "Shoots bullets that deal 1 damage",
+		"requiredLevel": 1 
+	},
+
+	{
+		"mainSprite": "Body",
+		"brokenImage": "Body_Broken",
+		"brokenImage2" : "Body_Broken2",
+		"gun": "missile",
+		"id": 10,
+		"mass": 4,
+		"maxHealth": 2,
+		"connectionPositions": [[0, 1], [1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1]],
+		"title": "Impact Gun",
+		"cost": 24,
+		"description": "Shoots impact explosives",
+		"requiredLevel": 5
+	},
+
+	{
+		"mainSprite": "Body",
+		"brokenImage": "Body_Broken",
+		"brokenImage2" : "Body_Broken2",
+		"gun": "pierce",
+		"id": 11,
+		"mass": 4,
+		"maxHealth": 2,
+		"connectionPositions": [[0, 1], [1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1]],
+		"title": "Armor Shredder",
+		"cost": 30,
+		"description": "Shoots a piercing bullet dealing up to 6 damage",
+		"requiredLevel": 4 
+	},
+
+	{
+		"mainSprite": "Body",
+		"brokenImage": "Body_Broken",
+		"brokenImage2" : "Body_Broken2",
+		"gun": "trishot",
+		"id": 12,
+		"mass": 4,
+		"maxHealth": 2,
+		"connectionPositions": [[0, 1], [1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1]],
+		"title": "Trishot",
+		"cost": 18,
+		"description": "Shoots 3 bullets in a spread",
+		"requiredLevel": 3 
+	},
+
+	{
+		"mainSprite": "Thrust",
+		"brokenImage": "Thrust_Broken",
+		"brokenImage2" : "Thrust_Broken2",
+		"gun": "",
+		"id": 13,
+		"mass": 2,
+		"maxHealth": 2,
+		"connectionPositions": [[0, 1], [1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1]],
+		"title": "Thrust",
+		"cost": 8,
+		"description": "Required to make your ship move",
+		"requiredLevel": 1 
+	},
+
+	{
+		"mainSprite": "Body",
+		"brokenImage": "Body_Broken",
+		"brokenImage2" : "Body_Broken2",
+		"gun": "",
+		"id": 14,
+		"mass": 2,
+		"maxHealth": 2,
+		"connectionPositions": [[0, 1], [1, 0], [1, -1], [0, -1], [-1, 0], [-1, 1]],
+		"title": "Body",
+		"cost": 8,
+		"description": "Light armor or connective material",
+		"requiredLevel": 1 
+	}
+
+]

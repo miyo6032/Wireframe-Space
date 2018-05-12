@@ -58,13 +58,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2b8f4f7d689654f9fe50b56bca7f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: 
-  cost: 0
-  desc: 
   currentSlot: {fileID: 0}
-  representativeModule: {fileID: 114330966771082128, guid: e299930bd25abca42856b36c5d0a454a,
-    type: 2}
+  id: 12
   editable: 1
+  dragInstance: {fileID: 0}
 --- !u!114 &114357037645975798
 MonoBehaviour:
   m_ObjectHideFlags: 1

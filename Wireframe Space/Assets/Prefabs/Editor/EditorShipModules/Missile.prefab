@@ -58,14 +58,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2b8f4f7d689654f9fe50b56bca7f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: Missile Launcher
-  cost: 24
-  desc: Shoot missiles that explode on impact
   currentSlot: {fileID: 0}
-  representativeModule: {fileID: 114790330089034346, guid: a32a448884b15914dbf4cc6b427f1bca,
-    type: 2}
+  id: 10
   editable: 1
-  requiredLevel: 4
   dragInstance: {fileID: 0}
 --- !u!114 &114315536096023604
 MonoBehaviour:

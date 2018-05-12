@@ -112,14 +112,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2b8f4f7d689654f9fe50b56bca7f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: Pierce Cannon
-  cost: 30
-  desc: Shoot a bullet that shreds through many parts
   currentSlot: {fileID: 0}
-  representativeModule: {fileID: 114301994990473190, guid: 9956d7351066abb4390e631955f9c5bd,
-    type: 2}
+  id: 11
   editable: 1
-  requiredLevel: 5
   dragInstance: {fileID: 0}
 --- !u!222 &222667456497831392
 CanvasRenderer:

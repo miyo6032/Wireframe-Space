@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +26,7 @@ public class ScrollModuleBank : MonoBehaviour {
         int moduleCount = 0;
         foreach (ModuleBank bank in bankPrefabs)
         {
-            if (bank.modulePrefab.requiredLevel <= MainMenu.instance.level)
+            if (GameManager.instance.database.GetModuleStats(bank.id).requiredLevel <= MainMenu.instance.level)
             {
                 GameObject instance = Instantiate(bank).gameObject;
                 instance.transform.SetParent(panel.transform);

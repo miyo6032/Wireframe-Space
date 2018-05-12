@@ -83,8 +83,10 @@ public class Ship : MonoBehaviour {
         int weight = 0;
         foreach (KeyValuePair<Vector2, Vertex> v in shipModules)
         {
-            centerOfMass += new Vector2(v.Value.module.transform.localPosition.x * v.Value.module.mass, v.Value.module.transform.localPosition.y * v.Value.module.mass);
-            weight += v.Value.module.mass;
+            Module stats = GameManager.instance.database.GetModuleStats(v.Value.module.id);
+            Vector3 localPosition = v.Value.module.transform.localPosition;
+            centerOfMass += new Vector2(localPosition.x * stats.mass, localPosition.y * stats.mass);
+            weight += stats.mass;
         }
         if (weight == 0) return;
         centerOfMass /= weight;
@@ -129,7 +131,7 @@ public class Ship : MonoBehaviour {
 
             module.xyPos = vec;
 
-        if(module.id == GameManager.instance.database.Cockpit.representativeModule.id)
+        if(module.id == GameManager.instance.database.Cockpit.id)
         {
             root = module;
         }
@@ -147,13 +149,15 @@ public class Ship : MonoBehaviour {
             Vertex v2;
             shipModules.TryGetValue(vec2, out v2);
 
-            for(int i = 0; i < v2.module.connectionPositions.Length; i++)
+            Module v2stats = GameManager.instance.database.GetModuleStats(v2.module.id);
+
+            for(int i = 0; i < v2stats.connectionPositions.Length; i++)
             {
-                if(v2.module.connectionPositions[i] == v2v1)
+                if(v2stats.connectionPositions[i] == v2v1)
                 {
                     break;
                 }
-                else if(i == v2.module.connectionPositions.Length - 1)
+                else if(i == v2stats.connectionPositions.Length - 1)
                 {
                     return 0;
                 }
@@ -172,13 +176,13 @@ public class Ship : MonoBehaviour {
     {
         Vertex v;
         shipModules.TryGetValue(xyPos, out v);
-        ShipModule module = v.module;
+        Module stats = GameManager.instance.database.GetModuleStats(v.module.id);
 
-        if(module != null)
+        if(v.module != null)
         {
-            for(int i = 0; i < module.connectionPositions.Length; i++)
+            for(int i = 0; i < stats.connectionPositions.Length; i++)
             {
-                Vector2 offset = module.connectionPositions[i] + xyPos;
+                Vector2 offset = stats.connectionPositions[i] + xyPos;
                 AddConnection(xyPos, offset);
             }
         }

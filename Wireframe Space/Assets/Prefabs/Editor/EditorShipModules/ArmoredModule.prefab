@@ -68,14 +68,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2b8f4f7d689654f9fe50b56bca7f18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  title: Ship Body
-  cost: 8
-  desc: Heavy duty armor for your ship
   currentSlot: {fileID: 0}
-  representativeModule: {fileID: 114317193979766068, guid: 5368e47b8d6028c48add80a6754d6a00,
-    type: 2}
+  id: 6
   editable: 1
-  requiredLevel: 6
   dragInstance: {fileID: 0}
 --- !u!222 &222428197713806588
 CanvasRenderer:

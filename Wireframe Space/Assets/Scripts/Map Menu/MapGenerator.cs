@@ -152,10 +152,10 @@ public class MapGenerator : MonoBehaviour {
     //A map generating algorithm that set random difficulty, size, and stuff like that
     Map GenerateMap(Map map, Vector2 newPos)
     {
-        float scaleDifficulty = Random.Range(1.5f, 2f);
+        float scaleDifficulty = Random.Range(1.5f, 2.5f);
 
         int shipSize = (int)(map.shipSize * scaleDifficulty);
-        int numShips = (int)(Random.Range(10, 30) / scaleDifficulty);
+        int numShips = (int)(Random.Range(16, 36) / scaleDifficulty);
         int reward = (int)(Mathf.Sqrt(map.shipSize * scaleDifficulty));
 
         return NewMap(map, newPos, numShips, shipSize, reward);

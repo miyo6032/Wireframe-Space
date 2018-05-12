@@ -194,7 +194,7 @@ public class MapMenu : MonoBehaviour {
 
         foreach (ModuleSaveData module in ship.modules)
         {
-            EditorShipModule mod = Instantiate(Editor.instance.database.GetPrefabByID(module.Id));
+            EditorShipModule mod = Instantiate(GameManager.instance.database.GetEditorModule(module.Id));
             mod.transform.SetParent(collectorObj.transform);
             mod.transform.localScale = Editor.instance.shipInfoUnitScale * new Vector3(1, 1, 1);
             Editor.instance.SetHexPositon(new Vector2(module.xPos, module.yPos), currentShipVisual.transform.position, mod.gameObject, Editor.instance.unitSize * Editor.instance.shipInfoUnitScale * MainMenu.instance.globalScale.localScale.x);

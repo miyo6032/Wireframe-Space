@@ -48,7 +48,7 @@ public class PlayZoneManager : MonoBehaviour {
 
         foreach(ModuleSaveData mod in GameManager.instance.player.modules)//Add the player
         {
-            player.AddModule(mod.xPos, mod.yPos, GameManager.instance.database.GetPrefabByIdPlayZone(mod.Id, "PlayerModule"));
+            player.AddModule(mod.xPos, mod.yPos, GameManager.instance.database.GetShipModule(mod.Id, true));
         }
 
         float angle = 0;
@@ -61,7 +61,7 @@ public class PlayZoneManager : MonoBehaviour {
             //Load the modules
             foreach(ModuleSaveData mod in enemy.modules)
             {
-                instance.AddModule(mod.xPos, mod.yPos, GameManager.instance.database.GetPrefabByIdPlayZone(mod.Id, "EnemyModule"));
+                instance.AddModule(mod.xPos, mod.yPos, GameManager.instance.database.GetShipModule(mod.Id, false));
             }
 
             instance.transform.position = Random.Range(25, 60) * new Vector3(Mathf.Cos(angle), Mathf.Sin(angle));
