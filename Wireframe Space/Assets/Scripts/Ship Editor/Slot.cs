@@ -23,33 +23,67 @@ public class Slot : MonoBehaviour, IDropHandler {
         return false;
     }
 
+    public void SetColor(Color color)
+    {
+        GetComponent<Image>().color = color;
+    }
+
     public void OnDrop(PointerEventData eventData)//Handles when a module gets dropped on a slot.
     {
+        SetColor(Color.white);
+
         EditorShipModule droppedItem = eventData.pointerDrag.GetComponent<EditorShipModule>();
 
         if (droppedItem == null) {//Case when a new instance from a module bank is dropped
-            droppedItem = eventData.pointerDrag.GetComponent<ModuleBank>().dragInstance.GetComponent<EditorShipModule>();
+            DropNew(eventData);
         }
         else if (droppedItem.dragInstance != null)//Case when a new instance from a module middle-clicked is dropped
         {
-            droppedItem = droppedItem.dragInstance.GetComponent<EditorShipModule>();
+            DropDuplcated(droppedItem);
         }
-
-        if (childModule != null && childModule != droppedItem)
+        else
         {
-            Destroy(childModule.gameObject);
+            DropItem(droppedItem);
         }
 
+        Editor.instance.DisplayStats();
+    }
+
+    void DropItem(EditorShipModule droppedItem)
+    {
+        RemoveFromPreviousSlot(droppedItem);
+        DestroyItemInThisSlot(droppedItem);
+        droppedItem.currentSlot = this;
+        childModule = droppedItem;
+    }
+
+    void DropNew(PointerEventData eventData)
+    {
+        EditorShipModule droppedItem = eventData.pointerDrag.GetComponent<ModuleBank>().dragInstance.GetComponent<EditorShipModule>();
+        DropItem(droppedItem);
+    }
+
+    void DropDuplcated(EditorShipModule droppedItem)
+    {
+        droppedItem = droppedItem.dragInstance;
+        DropItem(droppedItem);
+        droppedItem.ModuleToParentSlot();
+    }
+
+    void RemoveFromPreviousSlot(EditorShipModule droppedItem)
+    {
         if (droppedItem.currentSlot != null)
         {
             droppedItem.currentSlot.childModule = null;
         }
+    }
 
-        droppedItem.transform.position = transform.position;
-        droppedItem.transform.SetParent(transform);
-        droppedItem.currentSlot = this;
-        childModule = droppedItem;
-
+    void DestroyItemInThisSlot(EditorShipModule droppedItem)
+    {
+        if (childModule != null && childModule != droppedItem)
+        {
+            Destroy(childModule.gameObject);
+        }
     }
 
 }

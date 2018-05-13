@@ -11,6 +11,11 @@ IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEnd
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        DuplicateModule(eventData);
+    }
+
+    void DuplicateModule(PointerEventData eventData)
+    {
         dragInstance = Instantiate(GameManager.instance.database.GetEditorModule(id).gameObject);
         dragInstance.transform.position = eventData.position;
         dragInstance.transform.SetParent(Editor.instance.transform);

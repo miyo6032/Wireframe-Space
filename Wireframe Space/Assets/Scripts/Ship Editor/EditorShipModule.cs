@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 //Represents the editor pieces that are used to build a ship
 public class EditorShipModule : MonoBehaviour, IBeginDragHandler,
@@ -10,33 +9,21 @@ IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler, IPointerE
     public int id;
     public bool editable = true;
 
-    public GameObject dragInstance;
+    public EditorShipModule dragInstance;
 
     public void OnBeginDrag(PointerEventData eventData)//These functions handle all of the dragging and dropping of the modules when builting the editor.
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            if (!editable) return;
-            GetComponent<CanvasGroup>().blocksRaycasts = false;
-            currentSlot.GetComponent<Image>().color = Color.white;
+            DragModule();
         }
         else if (eventData.button == PointerEventData.InputButton.Middle)
         {
-            dragInstance = Instantiate(GameManager.instance.database.GetEditorModule(id).gameObject);
-            dragInstance.transform.position = eventData.position;
-            dragInstance.transform.SetParent(Editor.instance.transform);
-            dragInstance.transform.localScale = new Vector3(1, 1, 1);
-            dragInstance.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            DuplcateModule(eventData);
         }
         else if (eventData.button == PointerEventData.InputButton.Right)
         {
-            if (currentSlot != null)
-            {
-                currentSlot.childModule = null;
-            }
-
-            Editor.instance.DisplayStats();
-            Destroy(gameObject);
+            DeleteModule();
         }
     }
 
@@ -57,31 +44,12 @@ IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler, IPointerE
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            if (!editable) return;
-            Slot parentSlot;
-            if ((parentSlot = Editor.instance.GetSlot(currentSlot.xyPos)) != null)
-            {
-                transform.SetParent(parentSlot.transform);
-                transform.position = parentSlot.transform.position;
-                GetComponent<CanvasGroup>().blocksRaycasts = true;
-            }
-            Editor.instance.DisplayStats();
+            ModuleToParentSlot();
         }
         else if (eventData.button == PointerEventData.InputButton.Middle)
         {
-            Slot parentSlot = dragInstance.GetComponent<EditorShipModule>().currentSlot;
-            if (parentSlot != null)
-            {
-                dragInstance.transform.SetParent(parentSlot.transform);
-                dragInstance.transform.position = parentSlot.transform.position;
-                dragInstance.GetComponent<CanvasGroup>().blocksRaycasts = true;
-                dragInstance = null;
-            }
-            else
-            {
-                Destroy(dragInstance.gameObject);
-            }
-            Editor.instance.DisplayStats();
+            dragInstance.ModuleToParentSlot();
+            dragInstance = null;
         }
     }
 
@@ -95,13 +63,7 @@ IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler, IPointerE
         }
         else if(eventData.button == PointerEventData.InputButton.Right)
         {
-            if (currentSlot != null)
-            {
-                currentSlot.childModule = null;
-            }
-
-            Editor.instance.DisplayStats();
-            Destroy(gameObject);
+            DeleteModule();
         }
     }
 
@@ -109,14 +71,7 @@ IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler, IPointerE
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            if (!editable) return;
-            Slot parentSlot;
-            if ((parentSlot = Editor.instance.GetSlot(currentSlot.xyPos)) != null)
-            {
-                transform.SetParent(parentSlot.transform);
-                transform.position = parentSlot.transform.position;
-                GetComponent<CanvasGroup>().blocksRaycasts = true;
-            }
+            ModuleToParentSlot();
         }
     }
 
@@ -124,17 +79,45 @@ IDragHandler, IEndDragHandler, IPointerDownHandler, IPointerUpHandler, IPointerE
     {
         if (Input.GetMouseButton(1))
         {
-            if (currentSlot != null)
-            {
-                currentSlot.childModule = null;
-            }
-
-            Editor.instance.DisplayStats();
-            Destroy(gameObject);
-        }
-        if (Input.GetMouseButton(2))
-        {
-
+            DeleteModule();
         }
     }
+
+    public void ModuleToParentSlot()
+    {
+        if (!editable) return;
+        if (currentSlot == null) Destroy(gameObject);
+        Slot parentSlot = Editor.instance.GetSlot(currentSlot.xyPos);
+        GetComponent<CanvasGroup>().blocksRaycasts = true;
+        transform.SetParent(parentSlot.transform);
+        transform.position = parentSlot.transform.position;
+    }
+
+    void DragModule()
+    {
+        if (!editable) return;
+        GetComponent<CanvasGroup>().blocksRaycasts = false;
+        currentSlot.SetColor(Color.white);
+    }
+
+    void DuplcateModule(PointerEventData eventData)
+    {
+        dragInstance = Instantiate(GameManager.instance.database.GetEditorModule(id));
+        dragInstance.transform.position = eventData.position;
+        dragInstance.transform.SetParent(Editor.instance.transform);
+        dragInstance.transform.localScale = new Vector3(1, 1, 1);
+        dragInstance.GetComponent<CanvasGroup>().blocksRaycasts = false;
+    }
+
+    void DeleteModule()
+    {
+        if (currentSlot != null)
+        {
+            currentSlot.childModule = null;
+        }
+        currentSlot.SetColor(Color.white);
+        Editor.instance.DisplayStats();
+        Destroy(gameObject);
+    }
+
 }

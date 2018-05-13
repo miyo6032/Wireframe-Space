@@ -530,45 +530,52 @@ public class Editor : MonoBehaviour {
         return savedShips;
     }
 
-    bool IsShipValid(Dictionary<Vector2, ModuleVertex> modules)//Checks to see that there is 1 cockpit, and also that there are no island nodes from the cockpit.
+    bool ExceededShipPoints()
     {
-
-        if(shipPoints > MainMenu.instance.shipPoints)
+        if (shipPoints > MainMenu.instance.shipPoints)
         {
             infoPanel.gameObject.SetActive(true);
             infoPanel.ActivateDialogue("You have exceeded the maximum ship point count by " + (shipPoints - MainMenu.instance.shipPoints) + ". Remove some extra parts!", "", "", -1);
-            return false;
+            return true;
         }
+        return false;
+    }
 
+    ModuleVertex GetSingleCockpit()
+    {
         ModuleVertex cockpit = null;
 
-        foreach(KeyValuePair<Vector2, SlotVertex> kV in slots)//Add all modules to the dictionary and also register the cockpit(root) module
+        foreach (KeyValuePair<Vector2, SlotVertex> kV in slots)//Add all modules to the dictionary and also register the cockpit(root) module
         {
             if (kV.Value.slot.HasItem())
             {
                 ModuleVertex vertex = new ModuleVertex(kV.Value.slot.childModule, new List<ModuleVertex>(), false);
                 modules.Add(kV.Key, vertex);
                 SearchAndConnect(kV.Key, modules);
-                if(vertex.module.id == database.Cockpit.id)
+                if (vertex.module.id == database.Cockpit.id)
                 {
-                    if(cockpit != null)
+                    if (cockpit != null)
                     {
                         infoPanel.gameObject.SetActive(true);
                         infoPanel.ActivateDialogue("Your ship has multiple cockpits! There can only be one per ship.", "Cockpit Module", "Hexagon", -1);
-                        return false;
+                        return null;
                     }
                     cockpit = vertex;
                 }
             }
         }
 
-        if(cockpit == null)
+        if (cockpit == null)
         {
             infoPanel.gameObject.SetActive(true);
             infoPanel.ActivateDialogue("Your ship must have a cockpit! Make sure it is well protected in your ship.", "Cockpit Module", "Hexagon", -1);
-            return false;
+            return null;
         }
+        return cockpit;
+    }
 
+    bool ShipIsConnected(ModuleVertex cockpit)
+    {
         Queue<ModuleVertex> q = new Queue<ModuleVertex>();//Mark all connected nodes visited.
         cockpit.visited = true;
         q.Enqueue(cockpit);
@@ -594,11 +601,11 @@ public class Editor : MonoBehaviour {
             if (!v.Value.visited)
             {
                 missingValue = true;
-                v.Value.module.currentSlot.GetComponent<Image>().color = Color.red;
+                v.Value.module.currentSlot.SetColor(Color.red);
             }
             else
             {
-                v.Value.module.currentSlot.GetComponent<Image>().color = Color.white;
+                v.Value.module.currentSlot.SetColor(Color.white);
             }
         }
 
@@ -606,6 +613,28 @@ public class Editor : MonoBehaviour {
         {
             infoPanel.gameObject.SetActive(true);
             infoPanel.ActivateDialogue("Some parts are not attached to your ship! Unattached modules will be marked in red.", "", "", -1);
+            return false;
+        }
+        return true;
+    }
+
+    bool IsShipValid(Dictionary<Vector2, ModuleVertex> modules)//Checks to see that there is 1 cockpit, and also that there are no island nodes from the cockpit.
+    {
+
+        if (ExceededShipPoints())
+        {
+            return false;
+        }
+
+        ModuleVertex cockpit = GetSingleCockpit();
+
+        if(cockpit == null)
+        {
+            return false;
+        }
+
+        if (ShipIsConnected(cockpit))
+        {
             return false;
         }
 
