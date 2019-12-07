@@ -55,7 +55,7 @@ public class Editor : MonoBehaviour {
 
     public ScrollModuleBank bank;
 
-    public int loadedShipIndex = -1;
+    public ShipIndex loadedShipIndex;
 
     private ModuleDatabase database;
 
@@ -96,9 +96,9 @@ public class Editor : MonoBehaviour {
         gameObject.SetActive(true);
         bank.LoadBanks();
         GenerateEditorSpace();
-        if (editing && MapMenu.instance.currentShipIndex != -1)
+        if (editing)
         {
-            LoadShip(MapMenu.instance.currentShipIndex, MapMenu.instance.currentShipPreset);
+            LoadShip(MapMenu.instance.getCurrentShipIndex());
             editingCurrentShip = true;
         }
         if (MapMenu.instance.GetLeveledUP())
@@ -110,7 +110,7 @@ public class Editor : MonoBehaviour {
 
     public void TryToExit()//Will exit unless there are unsaved changes on an already loaded ship
     {
-        if (loadedShipIndex != -1 && !ShipsEquivalent(GetCurrentEditorShip(), GetSavedShips()[loadedShipIndex]))
+        if (loadedShipIndex != null && !ShipsEquivalent(GetCurrentEditorShip(), GetSavedShips()[loadedShipIndex.shipIndex]))
         {
             saveOrExitPanel.SetActive(true);
             return;
@@ -325,12 +325,12 @@ public class Editor : MonoBehaviour {
             {
                 Destroy(kV.Value.slot.childModule.gameObject);
                 kV.Value.slot.childModule = null;
+                kV.Value.slot.SetColor(Color.white);
             }
         }
         modules.Clear();
         shipDirection.transform.eulerAngles = Vector3.zero;
-        if (!editingCurrentShip)
-        loadedShipIndex = -1;
+        if (!editingCurrentShip) loadedShipIndex = null;
         DisplayStats();
     }
 
@@ -350,7 +350,7 @@ public class Editor : MonoBehaviour {
                 saveAs = true;
             }
 
-            if (loadedShipIndex == -1)//Can't save as if the editor didn't start from a previously loaded ship
+            if (loadedShipIndex == null)//Can't save as if the editor didn't start from a previously loaded ship
             {
                 saveAs = true;
             }
@@ -365,7 +365,7 @@ public class Editor : MonoBehaviour {
                 FileStream file = File.Create(Application.persistentDataPath + "/ships" + MainMenu.instance.profile + ".dat");
 
                 ShipSave shipToSave = GetCurrentEditorShip();
-                savedShips[loadedShipIndex] = shipToSave;
+                savedShips[loadedShipIndex.shipIndex] = shipToSave;
                 bf.Serialize(file, savedShips);
                 file.Close();
             }
@@ -399,7 +399,7 @@ public class Editor : MonoBehaviour {
             FileStream file = File.Create(Application.persistentDataPath + "/ships" + MainMenu.instance.profile + ".dat");
             savedShips.Add(shipToSave);
 
-            loadedShipIndex = savedShips.Count - 1;
+            loadedShipIndex = new ShipIndex(savedShips.Count - 1, false);
             bf.Serialize(file, savedShips);
             file.Close();
 
@@ -436,7 +436,7 @@ public class Editor : MonoBehaviour {
 
     public void SetAsCurrentShip()
     {
-        MapMenu.instance.SetCurrentShip(loadedShipIndex, false);
+        MapMenu.instance.SetCurrentShip(loadedShipIndex);
     }
 
     public void ChangeRotation()
@@ -444,17 +444,17 @@ public class Editor : MonoBehaviour {
         shipDirection.transform.eulerAngles = new Vector3(0, 0, shipDirection.transform.eulerAngles.z + 90);
     }
 
-    public void LoadShip(int index, bool preset)//Loads a ship into the editor and quits the ship list
+    public void LoadShip(ShipIndex index)//Loads a ship into the editor and quits the ship list
     {
         ShipSave shipToLoad;
         ClearEditor();
-        if (preset)
+        if (index.isPreset)
         {
-            shipToLoad = GetPresetShips()[index];
+            shipToLoad = GetPresetShips()[index.shipIndex];
         }
         else
         {
-            shipToLoad = GetSavedShips()[index];
+            shipToLoad = GetSavedShips()[index.shipIndex];
             loadedShipIndex = index;
         }
        
@@ -476,21 +476,22 @@ public class Editor : MonoBehaviour {
         Editor.instance.DisplayStats();
     }
 
-    public void DeleteShip(int index)//Delete a ship from the ship list
+    public void DeleteShip(ShipIndex index)//Delete a ship from the ship list
     {
+        if (index.isPreset) return;
         List<ShipSave> savedShips = GetSavedShips();
-        savedShips.Remove(savedShips[index]);
+        savedShips.Remove(savedShips[index.shipIndex]);
         if(index == loadedShipIndex)
         {
             ClearEditor();
         }
-        if(index == MapMenu.instance.currentShipIndex)//Since the map menu current ship is loaded, it is possible that the loaded ships would be destroyed in the ship list
+        if(index == MapMenu.instance.getCurrentShipIndex())//Since the map menu current ship is loaded, it is possible that the loaded ships would be destroyed in the ship list
         {
             MapMenu.instance.ClearCurrentShip();
         }
-        else if(index < MapMenu.instance.currentShipIndex)
+        else if(index.shipIndex < MapMenu.instance.getCurrentShipIndex().shipIndex)
         {
-            MapMenu.instance.currentShipIndex--;
+            MapMenu.instance.getCurrentShipIndex().shipIndex--;
         }
         FileStream file = File.Create(Application.persistentDataPath + "/ships" + MainMenu.instance.profile + ".dat");
         bf.Serialize(file, savedShips);
@@ -633,7 +634,7 @@ public class Editor : MonoBehaviour {
             return false;
         }
 
-        if (ShipIsConnected(cockpit))
+        if (!ShipIsConnected(cockpit))
         {
             return false;
         }

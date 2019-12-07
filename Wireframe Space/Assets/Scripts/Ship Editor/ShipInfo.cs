@@ -12,32 +12,40 @@ public class ShipInfo : MonoBehaviour {
 
     public GameObject shipVisual;
 
-    public int id;
+    private ShipIndex shipIndex;
+
+    private SavedShipList shipList;
 
     //Two different methods for the map ship list and the editor ship list
     public void ActivateDeletePanel()
     {
-        Editor.instance.savedShipList.ActivateDeletePanel(this);
-    }
-
-    public void ActivateDeletePanelMap()
-    {
-        MapMenu.instance.shipList.ActivateDeletePanel(this);
+        shipList.ActivateDeletePanel(this);
     }
 
     public void LoadShip()
     {
-        Editor.instance.LoadShip(id, false);
+        Editor.instance.LoadShip(shipIndex);
     }
 
-    public void LoadPreset()
+    public void Init(string infoText, string title, ShipIndex shipIndex, ShipSave ship)
     {
-        Editor.instance.LoadShip(id, true);
+        this.infoText.text = infoText;
+        this.title.text = title;
+        this.shipIndex = shipIndex;
+
+        foreach (ModuleSaveData module in ship.modules)
+        {
+            EditorShipModule mod = Instantiate(GameManager.instance.database.GetEditorModule(module.Id));
+            Editor.instance.SetHexPositon(new Vector2(module.xPos, module.yPos), shipVisual.transform.position, mod.gameObject, Editor.instance.unitSize * Editor.instance.shipInfoUnitScale);
+            mod.transform.localScale = Editor.instance.shipInfoUnitScale * new Vector3(1, 1, 1);
+            mod.transform.SetParent(transform);
+            mod.editable = false;
+        }
     }
 
-    public void SetAsCurrentShip(bool preset)
+    public void SetAsCurrentShip()
     {
-        MapMenu.instance.SetCurrentShip(id, preset);
+        MapMenu.instance.SetCurrentShip(shipIndex);
         MapMenu.instance.shipList.ClearList();
         MapMenu.instance.OpenMapMenu();
         MapMenu.instance.shipList.gameObject.SetActive(false);

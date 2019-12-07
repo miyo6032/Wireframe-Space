@@ -40,8 +40,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d11beff0f1cad4abe74bbf7c457ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modulePrefab: {fileID: 114873173786519392, guid: 2d48a13e2fe55f34aaaa504e98438cd8,
-    type: 2}
+  id: 6
   dragInstance: {fileID: 0}
 --- !u!114 &114735842580000306
 MonoBehaviour:

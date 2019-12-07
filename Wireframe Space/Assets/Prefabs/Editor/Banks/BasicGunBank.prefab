@@ -84,8 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d11beff0f1cad4abe74bbf7c457ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modulePrefab: {fileID: 114825968840716918, guid: b52d1d91ae1d65e478e39c110b3ff6bc,
-    type: 2}
+  id: 9
   dragInstance: {fileID: 0}
 --- !u!114 &114743286862923386
 MonoBehaviour:

@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114307148575538384}
   - component: {fileID: 114522696194688560}
   m_Layer: 5
-  m_Name: HexBank
+  m_Name: BodyBank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,8 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d11beff0f1cad4abe74bbf7c457ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modulePrefab: {fileID: 114025460087881370, guid: 090fd8b064748654392b9e2efe8b31d0,
-    type: 2}
+  id: 14
   dragInstance: {fileID: 0}
 --- !u!222 &222796885058930172
 CanvasRenderer:

@@ -149,8 +149,7 @@ public class MainMenu : MonoBehaviour {
 
         newProfile.shipPoints = shipPoints;
         newProfile.level = level;
-        newProfile.currentShip = MapMenu.instance.currentShipIndex;
-        newProfile.presetShip = MapMenu.instance.currentShipPreset;
+        newProfile.currentShipIndex = MapMenu.instance.getCurrentShipIndex();
 
         profiles[profile] = newProfile;
 
@@ -170,8 +169,7 @@ public class MainMenu : MonoBehaviour {
         profile = index;
         shipPoints = profiles[index].shipPoints;
         level = profiles[index].level;
-        MapMenu.instance.currentShipIndex = profiles[index].currentShip;
-        MapMenu.instance.currentShipPreset = profiles[index].presetShip;
+        MapMenu.instance.setCurrentShipIndex(profiles[index].currentShipIndex);
 
         ClearLoadScreen();
         loadPanel.SetActive(false);
@@ -204,14 +202,13 @@ public class ProfileSave
 {
     public int shipPoints;
     public int level;
-    public int currentShip;
-    public bool presetShip;
+    public ShipIndex currentShipIndex;
 
     public ProfileSave()
     {
         shipPoints = 0;
         level = 0;
-        currentShip = -1;
+        currentShipIndex = new ShipIndex();
     }
 
 }

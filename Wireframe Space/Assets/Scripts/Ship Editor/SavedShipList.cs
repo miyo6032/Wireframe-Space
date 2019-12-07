@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -46,32 +45,35 @@ public class SavedShipList : MonoBehaviour {
             }
         }
 
+        LoadShipInfos(prefab, shipList, loadPresets);
+
+        SetupScrolling();
+    }
+
+    void LoadShipInfos(ShipInfo prefab, List<ShipSave> shipList, bool isPreset)
+    {
         int index = 0;
-        foreach(ShipSave ship in shipList)//Generates all of the ShipInfo displays
+        foreach (ShipSave ship in shipList)//Generates all of the ShipInfo displays
         {
             ShipInfo instance = Instantiate(prefab);
-            instance.title.text = ship.title;
-            instance.id = index;
-            instance.infoText.text = "ShipPoints: " + ship.shipPoints + 
+
+            string infoText = "ShipPoints: " + ship.shipPoints +
                 "\nFire Power: " + ship.firePower;
 
-            foreach(ModuleSaveData module in ship.modules)
-            {
-                EditorShipModule mod = Instantiate(GameManager.instance.database.GetEditorModule(module.Id));
-                Editor.instance.SetHexPositon(new Vector2(module.xPos, module.yPos), instance.shipVisual.transform.position, mod.gameObject, Editor.instance.unitSize * Editor.instance.shipInfoUnitScale);
-                mod.transform.localScale = Editor.instance.shipInfoUnitScale * new Vector3(1, 1, 1);
-                mod.transform.SetParent(instance.transform);
-                mod.editable = false;
-            }
+            instance.Init(infoText, ship.title, new ShipIndex(index, isPreset), ship);
 
             instance.transform.SetParent(scrollingPanel.transform);
             instance.transform.localScale = new Vector3(1, 1, 1);
             loadedShips.Add(instance);
             index++;
         }
+    }
+
+    void SetupScrolling()
+    {
         unitSize = (int)scrollingPanel.GetComponent<GridLayoutGroup>().cellSize.x + (int)scrollingPanel.GetComponent<GridLayoutGroup>().spacing.x;//Calculates scrolling stuff
         panelSize = (int)Mathf.Clamp((loadedShips.Count - 4) * unitSize, 0, float.PositiveInfinity);
-        scrollbar.size = Mathf.Clamp(4/(float)loadedShips.Count, 0.1f, 1);
+        scrollbar.size = Mathf.Clamp(4 / (float)loadedShips.Count, 0.1f, 1);
         scrollbar.value = 0;
     }
 
@@ -102,16 +104,6 @@ public class SavedShipList : MonoBehaviour {
     {
         stagedToDelete = item;
         deletePanel.SetActive(true);
-    }
-
-    public void DeleteElementFromList()
-    {
-        loadedShips.Remove(stagedToDelete);
-        Editor.instance.DeleteShip(stagedToDelete.id);
-        deletePanel.SetActive(false);
-        Destroy(stagedToDelete.gameObject);
-        ClearList();
-        LoadList(false);
     }
 
     public void Scroll()

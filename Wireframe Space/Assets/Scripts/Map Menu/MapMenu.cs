@@ -23,9 +23,7 @@ public class MapMenu : MonoBehaviour {
 
     public MapNode mapToLoad;
 
-    public int currentShipIndex = -1;
-
-    public bool currentShipPreset;
+    private ShipIndex currentShipIndex;
 
     public MapGenerator mapGenerator;
 
@@ -41,7 +39,7 @@ public class MapMenu : MonoBehaviour {
 
     public Text levelUpText;
 
-    int[] levelCutoffs = { 25, 32, 45, 64, 90, 130, 180, 250, 320, 400};
+    int[] levelCutoffs = { 25, 32, 45, 64, 90, 130, 180, 250, 320, 400 };
 
     bool leveledup = false;
 
@@ -79,7 +77,7 @@ public class MapMenu : MonoBehaviour {
 
             //Level up stuff
             int level = 1;
-            while(MainMenu.instance.shipPoints >= levelCutoffs[level - 1])
+            while (MainMenu.instance.shipPoints >= levelCutoffs[level - 1])
             {
                 level++;
             }
@@ -101,15 +99,17 @@ public class MapMenu : MonoBehaviour {
 
         shipPoints.text = "Ship Points: " + MainMenu.instance.shipPoints + "\nLevel: " + MainMenu.instance.level;
 
-        //Set current ship
-        if (currentShipIndex != -1)
-        {
-            SetCurrentShip(currentShipIndex, currentShipPreset);
-        }
-        else
-        {
-            SetCurrentShip(0, true);
-        }
+        SetCurrentShip(currentShipIndex);
+    }
+
+    public ShipIndex getCurrentShipIndex()
+    {
+        return currentShipIndex;
+    }
+
+    public void setCurrentShipIndex(ShipIndex index)
+    {
+        currentShipIndex = index;
     }
 
     public bool GetLeveledUP()
@@ -162,7 +162,7 @@ public class MapMenu : MonoBehaviour {
         {
             Destroy(collectorObj.gameObject);
         }
-        currentShipIndex = -1;
+        currentShipIndex = new ShipIndex();
     }
 
     public void OpenShipList()//Opens the list to choose the current ship
@@ -172,23 +172,29 @@ public class MapMenu : MonoBehaviour {
         shipList.LoadList(false);
     }
 
-    public void SetCurrentShip(int id, bool preset)//When the player chooses the current ship from the ships list, this is called
+    public void SetCurrentShip(ShipIndex shipIndex)//When the player chooses the current ship from the ships list, this is called
     {
         ClearCurrentShip();
 
+        currentShipIndex = shipIndex;
+
+        RenderCurrentShip(shipIndex);
+    }
+
+    void RenderCurrentShip(ShipIndex shipIndex)
+    {
         collectorObj = new GameObject();
         collectorObj.transform.SetParent(currentShipVisual.transform);
         collectorObj.transform.localScale = new Vector3(1, 1, 1);
 
         ShipSave ship;
-        if (preset) {
-            ship = Editor.instance.GetPresetShips()[id];
-            currentShipPreset = true;
+        if (shipIndex.isPreset)
+        {
+            ship = Editor.instance.GetPresetShips()[shipIndex.shipIndex];
         }
         else
         {
-            ship = Editor.instance.GetSavedShips()[id];
-            currentShipPreset = false;
+            ship = Editor.instance.GetSavedShips()[shipIndex.shipIndex];
         }
         currentShipName.text = ship.title;
 
@@ -200,9 +206,6 @@ public class MapMenu : MonoBehaviour {
             Editor.instance.SetHexPositon(new Vector2(module.xPos, module.yPos), currentShipVisual.transform.position, mod.gameObject, Editor.instance.unitSize * Editor.instance.shipInfoUnitScale * MainMenu.instance.globalScale.localScale.x);
             mod.editable = false;
         }
-
-        currentShipIndex = id;
-
     }
 
     public void LoadTooltip(string title, string body, MapNode t)
@@ -239,25 +242,40 @@ public class MapMenu : MonoBehaviour {
             GameManager.instance.contentPosition = content.anchoredPosition;//Records the current position of the scroll view
             GameManager.instance.currentLoadedMap = mapToLoad.map;
 
-            if(currentShipIndex == -1)
+            if (currentShipIndex.isPreset)
             {
-                noShipPanel.SetActive(true);
-                return;
-            }
-
-            if (currentShipPreset)
-            {
-                GameManager.instance.player = Editor.instance.GetPresetShips()[currentShipIndex];
+                GameManager.instance.player = Editor.instance.GetPresetShips()[currentShipIndex.shipIndex];
             }
             else
             {
-                GameManager.instance.player = Editor.instance.GetSavedShips()[currentShipIndex];
+                GameManager.instance.player = Editor.instance.GetSavedShips()[currentShipIndex.shipIndex];
             }
 
             GameManager.instance.profile = MainMenu.instance.profile;
             MainMenu.instance.SaveProfile();
             SceneManager.LoadScene(2);
         }
+    }
+
+}
+
+[System.Serializable]
+public class ShipIndex
+{
+    public int shipIndex;
+    public bool isPreset;
+
+    public ShipIndex(int index, bool preset)
+    {
+        shipIndex = index;
+        isPreset = preset;
+    }
+
+    //Always initialize to the first preset ship
+    public ShipIndex()
+    {
+        shipIndex = 0;
+        isPreset = true;
     }
 
 }

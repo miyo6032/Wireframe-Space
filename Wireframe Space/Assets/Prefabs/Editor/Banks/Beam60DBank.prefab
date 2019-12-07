@@ -67,8 +67,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d11beff0f1cad4abe74bbf7c457ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modulePrefab: {fileID: 114129757155255394, guid: 23db86e5e0bb7eb4eb01ef024693c937,
-    type: 2}
+  id: 3
   dragInstance: {fileID: 0}
 --- !u!222 &222458215682908862
 CanvasRenderer:
